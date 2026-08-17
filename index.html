@@ -1,0 +1,2444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kaplan AI Ready</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0D0F18;--ink2:#2E3140;--ink3:#6B7087;--ink4:#A8ADBE;
+  --canvas:#F5F4EF;--surface:#FFF;--s2:#EFEDE6;--s3:#E8E6DE;
+  --navy:#0F1F5C;--navy2:#0A1640;--nl:#E8EBF5;
+  --teal:#0A6B55;--teal2:#085040;--tl:#E0F0EC;
+  --amber:#A05000;--amber2:#7A3C00;--al:#FBF0E2;
+  --coral:#B03020;--cl:#F9EAE7;
+  --purple:#4A3FB0;--pl:#ECEAFA;
+  --green:#2D6B1A;--gl:#E5F2DF;
+  --gold:#C89020;--gol:#FBF3DF;
+  --border:#DDD9CF;--border2:#C8C4BA;
+  --sh:0 1px 3px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.06);
+  --r:8px;--r2:14px;--r3:20px;
+  --sb:240px;--tb:58px;
+  --ease:cubic-bezier(.4,0,.2,1);
+}
+html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;background:var(--canvas);color:var(--ink);font-size:14px;line-height:1.5}
+
+/* ONBOARDING */
+.ob{position:fixed;inset:0;z-index:300;display:flex}
+.ob.gone{display:none}
+.obl{width:400px;flex-shrink:0;background:linear-gradient(160deg,var(--navy2),#1a3580 60%,#0e2870);padding:3rem 2.5rem;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.obl::before{content:'';position:absolute;right:-80px;top:-80px;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,.04)}
+.obl::after{content:'AI\AReady';white-space:pre;position:absolute;left:-10px;bottom:-20px;font-family:'Playfair Display',serif;font-size:76px;font-style:italic;opacity:.07;color:#fff;line-height:1;letter-spacing:-2px}
+.ob-brand{display:flex;align-items:center;gap:10px;margin-bottom:2.5rem}
+.ob-k{width:34px;height:34px;background:rgba(255,255,255,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:17px;font-family:'Playfair Display',serif}
+.ob-nm{font-size:15px;font-weight:600;color:#fff;letter-spacing:-.02em}
+.ob-nm em{opacity:.65;font-style:normal}
+.ob-h{font-family:'Playfair Display',serif;font-size:30px;font-weight:500;color:#fff;line-height:1.2;margin-bottom:.85rem}
+.ob-s{font-size:13px;color:rgba(255,255,255,.58);line-height:1.65;margin-bottom:2rem}
+.ob-fs{display:flex;flex-direction:column;gap:.65rem;margin-top:auto}
+.ob-f{display:flex;align-items:flex-start;gap:10px;color:rgba(255,255,255,.7);font-size:12px;line-height:1.5}
+.ob-fi{width:26px;height:26px;background:rgba(255,255,255,.1);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;margin-top:1px}
+.obr{flex:1;background:var(--surface);overflow-y:auto;display:flex;flex-direction:column}
+.obr::-webkit-scrollbar{width:0}
+.obs{display:none;padding:2.75rem;flex:1;flex-direction:column;animation:obIn .22s var(--ease)}
+.obs.active{display:flex}
+@keyframes obIn{from{opacity:0;transform:translateX(10px)}to{opacity:1;transform:translateX(0)}}
+.ob-prog{display:flex;gap:5px;margin-bottom:2rem}
+.ob-d{width:6px;height:6px;border-radius:50%;background:var(--border2);transition:all .2s}
+.ob-d.act{background:var(--navy);width:18px;border-radius:3px}
+.ob-d.dn{background:var(--teal)}
+.ob-lbl{font-size:10px;font-weight:600;color:var(--ink4);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.4rem}
+.ob-t{font-family:'Playfair Display',serif;font-size:24px;font-weight:500;margin-bottom:.4rem;line-height:1.2}
+.ob-desc{font-size:13px;color:var(--ink3);margin-bottom:1.75rem;line-height:1.6}
+.staff-list{display:flex;flex-direction:column;gap:6px;margin-bottom:1.5rem}
+.srow{display:flex;align-items:center;gap:10px;padding:.75rem 1rem;border:1px solid var(--border);border-radius:var(--r);background:var(--canvas)}
+.sav{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff;flex-shrink:0}
+.sname{flex:1;font-size:13px;font-weight:500}
+.srole{font-size:11px;color:var(--ink3)}
+.stag{font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px}
+.ob-acts{margin-top:auto;display:flex;gap:8px}
+.btn{border:none;border-radius:var(--r);padding:9px 18px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;transition:all .15s;display:inline-flex;align-items:center;gap:6px}
+.btn-p{background:var(--navy);color:#fff}.btn-p:hover{background:var(--navy2)}
+.btn-g{background:transparent;color:var(--ink3);border:1px solid var(--border)}.btn-g:hover{background:var(--canvas);color:var(--ink)}
+.btn-t{background:var(--teal);color:#fff}.btn-t:hover{background:var(--teal2)}
+.btn-sm{padding:6px 12px;font-size:12px}
+.btn-sec{background:transparent;color:var(--navy);border:1.5px solid var(--navy)}.btn-sec:hover{background:var(--nl)}
+
+/* APP */
+.app{display:grid;grid-template-columns:var(--sb) 1fr;grid-template-rows:var(--tb) 1fr;height:100vh;overflow:hidden;opacity:0;transition:opacity .3s}
+.app.vis{opacity:1}
+.topbar{grid-column:1/-1;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 1.5rem;gap:1rem;z-index:50}
+.brand{display:flex;align-items:center;gap:8px;min-width:calc(var(--sb) - 1.5rem)}
+.bm{width:30px;height:30px;background:var(--navy);border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:15px;font-family:'Playfair Display',serif;flex-shrink:0}
+.bn{font-size:14px;font-weight:600;color:var(--ink);letter-spacing:-.02em}
+.bn em{color:var(--navy);font-style:normal}
+.bp{font-size:9px;font-weight:700;background:var(--navy);color:#fff;border-radius:3px;padding:2px 6px;letter-spacing:.06em}
+.tsrch{flex:1;max-width:360px;background:var(--canvas);border:1px solid var(--border);border-radius:var(--r);padding:7px 12px;font-size:13px;display:flex;align-items:center;gap:7px;color:var(--ink4);cursor:pointer}
+.tr{margin-left:auto;display:flex;align-items:center;gap:8px}
+.tbtn{width:34px;height:34px;border-radius:var(--r);border:1px solid var(--border);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink3);font-size:17px;transition:all .15s}
+.tbtn:hover{background:var(--canvas)}
+.uc{font-size:12px;color:var(--ink3);text-align:right;line-height:1.3}
+.uc strong{display:block;font-size:13px;color:var(--ink);font-weight:500}
+.uav{width:34px;height:34px;border-radius:50%;border:none;cursor:pointer;font-size:12px;font-weight:600;font-family:inherit;display:flex;align-items:center;justify-content:center;color:#fff}
+.sidebar{background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;padding:1rem 0 1.5rem}
+.sidebar::-webkit-scrollbar{width:0}
+.ns{font-size:10px;font-weight:600;color:var(--ink4);letter-spacing:.08em;text-transform:uppercase;padding:.85rem 1.25rem .3rem}
+.ni{display:flex;align-items:center;gap:10px;padding:8px 1.25rem;font-size:13px;color:var(--ink3);cursor:pointer;transition:all .15s;position:relative;border:none;background:transparent;width:100%;text-align:left;font-family:inherit}
+.ni:hover{background:var(--canvas);color:var(--ink)}
+.ni.act{background:var(--nl);color:var(--navy);font-weight:500}
+.ni.act::before{content:'';position:absolute;left:0;top:4px;bottom:4px;width:3px;background:var(--navy);border-radius:0 3px 3px 0}
+.ni-ic{font-size:17px;width:20px;text-align:center;flex-shrink:0}
+.ni-b{margin-left:auto;font-size:10px;font-weight:700;background:var(--navy);color:#fff;border-radius:20px;padding:2px 7px}
+.ndiv{height:1px;background:var(--border);margin:.5rem 1.25rem}
+.titems{padding:.4rem 1.25rem;display:flex;flex-direction:column;gap:2px}
+.titem{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:var(--r);font-size:12px;color:var(--ink3);cursor:pointer;transition:all .15s;border:none;background:transparent;width:100%;text-align:left;font-family:inherit}
+.titem:hover{background:var(--canvas);color:var(--ink)}
+.titem.act{background:var(--canvas);color:var(--ink);font-weight:500}
+.tdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.tpct{margin-left:auto;font-size:10px;color:var(--ink4)}
+.sbf{margin-top:auto;padding:1rem 1.25rem 0;border-top:1px solid var(--border)}
+.sc{background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:var(--r2);padding:.85rem 1rem;color:#fff}
+.sc-l{font-size:10px;opacity:.6;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}
+.sc-v{font-size:28px;font-weight:600;font-family:'Playfair Display',serif;line-height:1}
+.sc-s{font-size:11px;opacity:.55;margin-top:3px}
+.sc-b{height:3px;background:rgba(255,255,255,.2);border-radius:2px;margin-top:8px;overflow:hidden}
+.sc-f{height:100%;background:#fff;border-radius:2px}
+.main{overflow-y:auto;background:var(--canvas)}
+.main::-webkit-scrollbar{width:6px}
+.main::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+.view{display:none;padding:1.75rem;animation:fIn .2s var(--ease)}
+.view.act{display:block}
+@keyframes fIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+/* SHARED */
+.pt{font-family:'Playfair Display',serif;font-size:26px;font-weight:500;margin-bottom:4px}
+.ps{font-size:13px;color:var(--ink3);margin-bottom:1.5rem}
+.shdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:.85rem}
+.shdr h3{font-size:13px;font-weight:600}
+.lb{font-size:12px;color:var(--navy);cursor:pointer;font-weight:500;background:none;border:none;font-family:inherit}
+.lb:hover{text-decoration:underline}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:1.1rem}
+.pb{height:4px;background:var(--s3);border-radius:3px;overflow:hidden}
+.pf{height:100%;border-radius:3px;transition:width .6s}
+
+/* DASHBOARD */
+.mrow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:1.25rem}
+.mc{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:1rem 1.1rem}
+.ml{font-size:10px;color:var(--ink4);margin-bottom:5px;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.mv{font-size:22px;font-weight:600;font-family:'Playfair Display',serif}
+.ms{font-size:11px;color:var(--teal);margin-top:3px}
+.dgrid{display:grid;grid-template-columns:1fr 295px;gap:1.25rem}
+.cc{background:linear-gradient(135deg,var(--navy),#1a3580);border-radius:var(--r2);padding:1.25rem;color:#fff;margin-bottom:1.25rem;cursor:pointer;transition:opacity .15s}
+.cc:hover{opacity:.93}
+.cc-l{font-size:10px;opacity:.55;text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:4px}
+.cc-t{font-size:15px;font-weight:500;margin-bottom:3px}
+.cc-s{font-size:12px;opacity:.6;margin-bottom:.85rem}
+.cc-b{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:var(--r);padding:6px 14px;color:#fff;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:5px}
+.clist{display:flex;flex-direction:column;gap:8px}
+.crow{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:.9rem 1.1rem;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:12px}
+.crow:hover{border-color:var(--border2);box-shadow:var(--sh)}
+.ci{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.ct{font-size:13px;font-weight:500;margin-bottom:2px}
+.cm{font-size:11px;color:var(--ink4);margin-bottom:5px}
+.cp{font-size:12px;font-weight:600;color:var(--ink3);min-width:32px;text-align:right;flex-shrink:0}
+.ap{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:1rem}
+.ai{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}
+.ai:last-child{border-bottom:none;padding-bottom:0}
+.aic{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.at{font-size:12px;font-weight:500;margin-bottom:1px}
+.as2{font-size:11px;color:var(--ink4)}
+.atm{font-size:10px;color:var(--ink4);margin-top:1px}
+
+/* COURSES */
+.chero{background:linear-gradient(135deg,var(--navy),#1a3580);border-radius:var(--r3);padding:1.75rem;color:#fff;margin-bottom:1.25rem;position:relative;overflow:hidden}
+.chero::after{content:'AI';position:absolute;right:1rem;bottom:-1.5rem;font-family:'Playfair Display',serif;font-size:110px;font-style:italic;opacity:.07;color:#fff;line-height:1}
+.htag{display:inline-block;background:rgba(255,255,255,.18);border-radius:5px;padding:3px 10px;font-size:10px;font-weight:600;letter-spacing:.05em;margin-bottom:.6rem;text-transform:uppercase}
+.ht{font-family:'Playfair Display',serif;font-size:22px;font-weight:500;margin-bottom:.35rem;line-height:1.25}
+.hs{font-size:12px;opacity:.65;margin-bottom:1rem}
+.hst{display:flex;gap:1.5rem;margin-bottom:1rem}
+.hst strong{display:block;font-size:18px;font-weight:600;line-height:1}
+.hst span{font-size:11px;opacity:.6}
+.hb{border:none;border-radius:var(--r);padding:8px 16px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;margin-right:7px;display:inline-flex;align-items:center;gap:5px}
+.hbp{background:#fff;color:var(--navy)}.hbs{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff}
+.mlist{display:flex;flex-direction:column;gap:7px}
+.mi{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:.85rem 1.1rem;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all .15s}
+.mi:hover:not(.mlk){border-color:var(--border2);box-shadow:var(--sh)}
+.mlk{opacity:.5;cursor:not-allowed}
+.mn{width:28px;height:28px;border-radius:7px;background:var(--canvas);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0}
+.mn.dn{background:var(--teal);color:#fff;border-color:var(--teal)}
+.mn.cu{background:var(--navy);color:#fff;border-color:var(--navy)}
+.mti{font-size:13px;font-weight:500;flex:1}
+.mme{font-size:11px;color:var(--ink4)}
+.mbg{font-size:10px;padding:2px 7px;border-radius:4px;font-weight:600}
+.mbg.dn{background:var(--tl);color:var(--teal2)}
+.mbg.cu{background:var(--nl);color:var(--navy)}
+.mbg.lk{color:var(--ink4)}
+
+/* ═══ SIMULATOR — LIVE AI ═══ */
+.sim-shell{background:var(--surface);border:1px solid var(--border);border-radius:var(--r3);overflow:hidden}
+.sim-topbar{background:var(--ink);color:#fff;padding:0 1.25rem;height:46px;display:flex;align-items:center;gap:12px}
+.sim-live-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;animation:ldpulse 2s infinite;flex-shrink:0}
+@keyframes ldpulse{0%,100%{opacity:1}50%{opacity:.3}}
+.sim-ai-badge{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:2px 10px;font-size:10px;font-weight:600;letter-spacing:.04em;color:rgba(255,255,255,.8)}
+.sim-ai-star{font-size:10px}
+.sim-score{margin-left:auto;background:rgba(255,255,255,.12);border-radius:6px;padding:4px 12px;font-size:13px;font-weight:600}
+
+.sim-controls{padding:.85rem 1.25rem;border-bottom:1px solid var(--border);background:var(--canvas);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.sim-ctrl-group{display:flex;align-items:center;gap:6px}
+.sim-ctrl-label{font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+.sim-select{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:5px 10px;font-size:12px;font-family:inherit;color:var(--ink2);outline:none;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%236B7087' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;padding-right:24px;transition:border-color .15s}
+.sim-select:focus,.sim-select:hover{border-color:var(--border2)}
+
+.gen-btn{
+  display:flex;align-items:center;gap:7px;margin-left:auto;
+  background:var(--navy);color:#fff;
+  border:none;border-radius:var(--r);padding:7px 16px;
+  font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;
+  transition:all .15s;position:relative;overflow:hidden;white-space:nowrap;
+}
+.gen-btn:hover:not(:disabled){background:var(--navy2);transform:translateY(-1px);box-shadow:0 3px 12px rgba(15,31,92,.3)}
+.gen-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.gen-btn-shine{position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.18) 50%,transparent 60%);transform:translateX(-100%)}
+.gen-btn:not(:disabled):hover .gen-btn-shine{animation:shine .5s ease forwards}
+@keyframes shine{to{transform:translateX(200%)}}
+.gen-icon{transition:transform .3s}
+.gen-btn:not(:disabled):hover .gen-icon{transform:rotate(18deg)}
+
+.sim-body{padding:1.5rem;min-height:480px;display:flex;flex-direction:column}
+
+/* IDLE STATE */
+.sim-idle{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;gap:.75rem;padding:2rem;
+}
+.sim-idle-ring{
+  width:72px;height:72px;border-radius:50%;
+  background:linear-gradient(135deg,var(--nl),var(--pl));
+  display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:.25rem;
+}
+.sim-idle-title{font-size:15px;font-weight:500;color:var(--ink)}
+.sim-idle-sub{font-size:13px;color:var(--ink3);max-width:360px;line-height:1.6}
+.sim-idle-pills{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:.25rem}
+.idle-pill{font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px}
+
+/* LOADING STATE */
+.sim-loading{display:none;flex:1;flex-direction:column;padding:1rem 0}
+.sim-loading.show{display:flex}
+.sim-loading-hdr{display:flex;align-items:center;gap:12px;margin-bottom:1.5rem;padding:.85rem 1rem;background:var(--nl);border-radius:var(--r2)}
+.sim-spinner{width:18px;height:18px;border:2px solid var(--nl);border-top-color:var(--navy);border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sim-loading-title{font-size:13px;font-weight:500;color:var(--navy)}
+.sim-loading-sub{font-size:11px;color:var(--ink3);margin-top:2px}
+.loading-steps{display:flex;flex-direction:column;gap:6px}
+.lstep{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--r);background:var(--canvas);font-size:12px;color:var(--ink4);transition:all .2s}
+.lstep.active{background:var(--nl);color:var(--ink);font-weight:500}
+.lstep.done{color:var(--ink3)}
+.lstep-d{width:6px;height:6px;border-radius:50%;background:var(--border2);flex-shrink:0;transition:background .3s}
+.lstep-d.active{background:var(--navy);animation:dpulse 1s infinite}
+.lstep-d.done{background:var(--teal)}
+@keyframes dpulse{0%,100%{opacity:1}50%{opacity:.35}}
+.lstep-ck{margin-left:auto;font-size:11px;color:var(--teal);display:none}
+.lstep.done .lstep-ck{display:block}
+
+/* QUESTION AREA */
+.sim-qwrap{display:none;flex:1;flex-direction:column}
+.sim-qwrap.show{display:flex}
+.qhdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.qctr{font-size:11px;color:var(--ink3);font-weight:500}
+.pips{display:flex;gap:5px}
+.pip{width:22px;height:4px;border-radius:2px;background:var(--border);transition:background .3s}
+.pip.ok{background:var(--teal)}.pip.bd{background:var(--coral)}.pip.cu{background:var(--navy)}
+
+/* AI-GENERATED SCENARIO HEADER */
+.ai-scenario-hdr{
+  background:linear-gradient(135deg,var(--navy),#1a3580);
+  border-radius:var(--r2);padding:1.1rem 1.25rem;color:#fff;margin-bottom:1rem;position:relative;overflow:hidden;
+}
+.ai-scenario-hdr::after{content:'AI';position:absolute;right:.5rem;bottom:-.75rem;font-family:'Playfair Display',serif;font-size:60px;font-style:italic;opacity:.08;color:#fff;line-height:1}
+.ai-hdr-top{display:flex;align-items:flex-start;justify-content:space-between;gap:.75rem;margin-bottom:.5rem}
+.ai-role-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,.18);border-radius:5px;padding:2px 9px;font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+.ai-fresh{display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:2px 8px;font-size:9px;font-weight:600;color:rgba(255,255,255,.75);white-space:nowrap}
+.ai-fresh-dot{width:5px;height:5px;border-radius:50%;background:#4ade80}
+.ai-scenario-label{font-size:11px;opacity:.55;font-style:italic;margin-bottom:3px}
+.ai-scenario-text{font-size:13px;line-height:1.65;color:rgba(255,255,255,.9)}
+.ai-reg{display:flex;align-items:center;gap:5px;margin-top:.65rem;font-size:10px;opacity:.55}
+
+.qtext{font-size:14px;font-weight:500;color:var(--ink);margin-bottom:.9rem;line-height:1.45}
+.choices{display:flex;flex-direction:column;gap:7px}
+.choice{display:flex;align-items:flex-start;gap:10px;padding:.75rem 1rem;border:1px solid var(--border);border-radius:var(--r);cursor:pointer;transition:all .15s;font-size:13px;color:var(--ink2);background:var(--surface)}
+.choice:hover:not(.clk){border-color:var(--border2);background:var(--canvas);transform:translateX(2px)}
+.clk{cursor:default}
+.choice.ok{border-color:var(--teal);background:var(--tl);color:var(--teal2)}
+.choice.bad{border-color:var(--coral);background:var(--cl);color:var(--coral)}
+.choice.msd{border-color:var(--teal);background:var(--tl);color:var(--teal2);opacity:.65}
+.ch-letter{width:22px;height:22px;border-radius:5px;background:var(--canvas);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;margin-top:2px;transition:all .15s}
+.choice:hover:not(.clk) .ch-letter{background:var(--nl);border-color:var(--navy);color:var(--navy)}
+.choice.ok .ch-letter{background:var(--teal);border-color:var(--teal);color:#fff}
+.choice.bad .ch-letter{background:var(--coral);border-color:var(--coral);color:#fff}
+.choice.msd .ch-letter{background:var(--teal);border-color:var(--teal);color:#fff}
+
+.fb{display:none;margin-top:.9rem;padding:1rem 1.1rem;border-radius:var(--r);font-size:13px;line-height:1.65}
+.fb.show{display:block;animation:fbIn .2s var(--ease)}
+@keyframes fbIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.fb.ok{background:var(--gl);border-left:3px solid var(--green);color:#1A4A0A}
+.fb.bad{background:var(--cl);border-left:3px solid var(--coral);color:var(--coral)}
+.fbh{font-weight:600;margin-bottom:4px;font-size:14px}
+.fbc{font-size:11px;margin-top:7px;opacity:.75;font-style:italic;padding-top:7px;border-top:1px solid rgba(0,0,0,.08)}
+
+.sim-footer{margin-top:auto;padding-top:1rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px}
+.sim-hint{font-size:12px;color:var(--ink4)}
+
+/* RESULTS */
+.sim-results{display:none;text-align:center;padding:2rem 1rem;flex:1;flex-direction:column;align-items:center;justify-content:center;gap:1rem}
+.sim-results.show{display:flex}
+.rring{width:88px;height:88px;border-radius:50%;background:var(--nl);display:flex;align-items:center;justify-content:center}
+.rval{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:var(--navy)}
+.rlbl{font-size:13px;color:var(--ink3)}
+.rgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;max-width:280px}
+.rcard{background:var(--canvas);border-radius:var(--r);padding:.65rem}
+.rv2{font-size:18px;font-weight:600;font-family:'Playfair Display',serif}
+.rl2{font-size:11px;color:var(--ink4);margin-top:2px}
+
+/* ERROR */
+.sim-error{display:none;margin:1rem 0;padding:.85rem 1rem;background:var(--cl);border:1px solid var(--coral);border-radius:var(--r);font-size:12px;color:var(--coral);align-items:flex-start;gap:8px}
+.sim-error.show{display:flex}
+
+/* CERTS */
+.cg{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.ccard{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:1.1rem;display:flex;gap:.9rem}
+.ccic{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.ccn{font-size:13px;font-weight:500;margin-bottom:2px;line-height:1.35}
+.ccm{font-size:11px;color:var(--ink4);margin-bottom:.55rem;line-height:1.4}
+.ccb{font-size:11px;font-weight:600;padding:4px 11px;border-radius:5px;border:none;cursor:pointer;font-family:inherit}
+.ccb.e{background:var(--teal);color:#fff}
+.ccb.p{background:var(--nl);color:var(--navy)}
+.ccb.l{background:var(--canvas);color:var(--ink4);border:1px solid var(--border)}
+
+/* EMPLOYER */
+.est{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:1.25rem}
+.ec{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:1rem}
+.ev{font-size:26px;font-weight:600;font-family:'Playfair Display',serif;margin-bottom:2px}
+.elb{font-size:11px;color:var(--ink4);font-weight:500;text-transform:uppercase;letter-spacing:.04em}
+.etr{font-size:11px;color:var(--teal);margin-top:3px}
+.egr{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+.ttbl{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden}
+.thd{display:grid;grid-template-columns:1fr 70px 55px 90px;padding:.6rem 1rem;background:var(--canvas);border-bottom:1px solid var(--border)}
+.thd span{font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.05em}
+.trow{display:grid;grid-template-columns:1fr 70px 55px 90px;padding:.7rem 1rem;border-bottom:1px solid var(--border);align-items:center;transition:all .15s;cursor:pointer}
+.trow:last-child{border-bottom:none}
+.trow:hover{background:var(--canvas)}
+.minf{display:flex;align-items:center;gap:8px}
+.mav2{width:27px;height:27px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff;flex-shrink:0}
+.mn2{font-size:13px;font-weight:500}
+.mr2{font-size:11px;color:var(--ink4)}
+.sch{padding:2px 8px;border-radius:5px;font-size:12px;font-weight:600;display:inline-block}
+.sh{background:var(--gl);color:var(--green)}.sm2{background:var(--gol);color:var(--gold)}.sl{background:var(--cl);color:var(--coral)}
+.mbw{display:flex;align-items:center;gap:5px}
+.mb{flex:1;height:4px;background:var(--canvas);border-radius:2px;overflow:hidden}
+.mf{height:100%;border-radius:2px;background:var(--navy)}
+
+/* MODAL */
+.mo{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:500;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
+.mo.op{opacity:1;pointer-events:all}
+.mod{background:var(--surface);border-radius:var(--r3);padding:2rem;max-width:500px;width:90%;max-height:85vh;overflow-y:auto;transform:translateY(12px);transition:transform .2s;box-shadow:0 8px 40px rgba(0,0,0,.14)}
+.mo.op .mod{transform:translateY(0)}
+.mhd{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.25rem;gap:1rem}
+.mtt{font-family:'Playfair Display',serif;font-size:20px;font-weight:500}
+.mcl{background:none;border:none;cursor:pointer;color:var(--ink3);font-size:20px;line-height:1}
+/* ORG SELECTOR */
+.org-option{border:1.5px solid var(--border);border-radius:var(--r2);padding:.85rem 1rem;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:12px}
+.org-option:hover{border-color:var(--navy);background:var(--nl)}
+.org-option.selected{border-color:var(--navy);background:var(--nl)}
+
+/* LEADERBOARD */
+.lb-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:1rem 1.1rem;position:relative;overflow:hidden;cursor:pointer;transition:all .15s}
+.lb-card:hover{border-color:var(--border2);box-shadow:var(--sh);transform:translateY(-1px)}
+.lb-card.rank-1{border-top:3px solid var(--gold)}
+.lb-card.rank-2{border-top:3px solid #9CA3AF}
+.lb-card.rank-3{border-top:3px solid #C47B3A}
+.lb-rank{position:absolute;top:.9rem;right:1rem;font-size:22px;opacity:.12;font-weight:700;font-family:'Playfair Display',serif;line-height:1}
+.lb-medal{font-size:18px;margin-bottom:.4rem}
+.lb-name{font-size:13px;font-weight:500;color:var(--ink);margin-bottom:1px}
+.lb-role{font-size:11px;color:var(--ink4);margin-bottom:.7rem}
+.lb-score-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.lb-score{font-size:22px;font-weight:600;font-family:'Playfair Display',serif;line-height:1}
+.lb-delta{font-size:11px;font-weight:600;padding:2px 7px;border-radius:4px}
+.lb-bar{height:5px;background:var(--s3);border-radius:3px;overflow:hidden;margin-bottom:.6rem}
+.lb-bar-fill{height:100%;border-radius:3px;transition:width .8s var(--ease)}
+.lb-meta{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--ink4)}
+.lb-streak{display:flex;align-items:center;gap:3px;font-size:11px;font-weight:500;color:var(--gold)}
+
+/* REGULATORY NEWS */
+.news-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:1rem;cursor:pointer;transition:all .15s;display:flex;flex-direction:column;gap:.5rem}
+.news-card:hover{border-color:var(--border2);box-shadow:var(--sh);transform:translateY(-1px)}
+.news-card.unread{border-left:3px solid var(--coral)}
+.news-tag{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;letter-spacing:.04em;text-transform:uppercase;width:fit-content}
+.news-headline{font-size:13px;font-weight:500;color:var(--ink);line-height:1.4}
+.news-body{font-size:12px;color:var(--ink3);line-height:1.55}
+.news-footer{display:flex;align-items:center;justify-content:space-between;margin-top:.25rem}
+.news-source{font-size:10px;color:var(--ink4);font-weight:500}
+.news-date{font-size:10px;color:var(--ink4)}
+.news-impact{font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px}
+.impact-high{background:var(--al);color:var(--amber2)}
+.impact-med{background:var(--nl);color:var(--navy)}
+.impact-info{background:var(--gl);color:var(--green)}
+.news-full-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;transition:all .15s}
+.news-full-card.unread{border-left:3px solid var(--coral)}
+.news-full-hdr{padding:.9rem 1.1rem;cursor:pointer;display:flex;align-items:flex-start;gap:12px}
+.news-full-hdr:hover{background:var(--canvas)}
+.news-full-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;margin-top:2px}
+.news-expand{display:none;padding:.75rem 1.1rem 1rem;border-top:1px solid var(--border);background:var(--canvas);font-size:12px;color:var(--ink2);line-height:1.65}
+.news-expand.open{display:block;animation:fbIn .15s ease}
+.news-expand .action-chip{display:inline-flex;align-items:center;gap:4px;background:var(--nl);color:var(--navy);border-radius:5px;padding:3px 9px;font-size:11px;font-weight:500;margin-top:.65rem;cursor:pointer;border:none;font-family:inherit}
+.news-expand .action-chip:hover{background:#d8e0f5}
+@keyframes typeDot{0%,60%,100%{opacity:.3;transform:scale(.8)}30%{opacity:1;transform:scale(1)}}
+.expert-suggestion{width:100%;text-align:left;background:var(--canvas);border:1px solid var(--border);border-radius:var(--r);padding:7px 10px;font-size:12px;color:var(--ink2);cursor:pointer;transition:all .15s;font-family:inherit;line-height:1.4}
+.expert-suggestion:hover{border-color:var(--navy);background:var(--nl);color:var(--navy)}
+.chat-msg-user{display:flex;justify-content:flex-end}
+.chat-msg-user .bubble{background:var(--navy);color:#fff;border-radius:var(--r2) var(--r2) 0 var(--r2);padding:.85rem 1rem;font-size:13px;line-height:1.65;max-width:85%}
+.chat-msg-expert{display:flex;align-items:flex-start;gap:10px}
+.chat-msg-expert .bubble{background:var(--canvas);border:1px solid var(--border);border-radius:0 var(--r2) var(--r2) var(--r2);padding:.85rem 1rem;font-size:13px;color:var(--ink2);line-height:1.65;max-width:85%}
+.chat-msg-expert .eavatar{width:30px;height:30px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;color:#fff}
+.bubble .cite{font-size:11px;color:var(--ink4);margin-top:.6rem;padding-top:.6rem;border-top:1px solid rgba(0,0,0,.08);font-style:italic}
+.bubble strong{font-weight:600}
+.msg-meta{font-size:10px;color:var(--ink4);margin-top:4px;padding-left:2px}
+#chat-messages::-webkit-scrollbar{width:4px}
+#chat-messages::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+</style>
+</head>
+<body>
+
+<!-- ONBOARDING -->
+<div class="ob" id="ob">
+  <div class="obl">
+    <div class="ob-brand"><div class="ob-k">K</div><div class="ob-nm">Kaplan <em>AI Ready</em></div></div>
+    <div class="ob-h">AI training built for your profession.</div>
+    <div class="ob-s">Not generic AI courses. Role-specific compliance training mapped to the exact regulatory framework governing your licensed work — built on Kaplan's expert curriculum.</div>
+    <div class="ob-fs">
+      <div class="ob-f"><div class="ob-fi"><i class="ti ti-shield-check"></i></div>Scenarios tied to real regulations — HIPAA, FINRA, NAIC, ABA, NAR, CFA Institute</div>
+      <div class="ob-f"><div class="ob-fi"><i class="ti ti-sparkles"></i></div>Live AI-generated compliance scenarios — infinite, unique, always role-specific</div>
+      <div class="ob-f"><div class="ob-fi"><i class="ti ti-eye-off"></i></div>Staff only see tracks relevant to their licensed role — no noise</div>
+    </div>
+  </div>
+  <div class="obr">
+    <div class="obs active" id="s1">
+      <div class="ob-prog"><div class="ob-d act"></div><div class="ob-d"></div><div class="ob-d"></div></div>
+      <div class="ob-lbl">Administrator Access</div>
+      <div class="ob-t">Welcome to Kaplan AI Ready</div>
+      <div class="ob-desc">As an administrator, you assign AI compliance tracks to your team based on their licensed roles. Staff are automatically enrolled in only the tracks relevant to their profession.</div>
+      <div style="font-size:13px;font-weight:500;color:var(--ink);margin-bottom:.75rem">Select your organization:</div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:1.5rem">
+        <div class="org-option selected" id="org-opt-health" onclick="selectOrg('health',this)">
+          <div style="width:36px;height:36px;border-radius:9px;background:var(--tl);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0">🏥</div>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:500;margin-bottom:1px">Northwestern Memorial Hospital</div>
+            <div style="font-size:11px;color:var(--ink3)">Patricia Chen, CCO · Healthcare AI Compliance</div>
+          </div>
+          <div class="org-check" id="org-check-health" style="width:18px;height:18px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ti-check" style="font-size:10px;color:#fff"></i></div>
+        </div>
+        <div class="org-option" id="org-opt-fin" onclick="selectOrg('fin',this)">
+          <div style="width:36px;height:36px;border-radius:9px;background:var(--nl);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0">📈</div>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:500;margin-bottom:1px">Merrill Lynch Advisory Team</div>
+            <div style="font-size:11px;color:var(--ink3)">Robert Kim, Compliance Director · Securities + CFP® AI Compliance</div>
+          </div>
+          <div class="org-check" id="org-check-fin" style="width:18px;height:18px;border-radius:50%;background:var(--border2);display:flex;align-items:center;justify-content:center;flex-shrink:0;opacity:.3"><i class="ti ti-check" style="font-size:10px;color:#fff"></i></div>
+        </div>
+      </div>
+      <div style="font-size:13px;font-weight:500;margin-bottom:.75rem">What would you like to do today?</div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:1.75rem">
+        <div style="border:1.5px solid var(--border);border-radius:var(--r2);padding:1rem 1.1rem;cursor:pointer;display:flex;align-items:center;gap:12px;transition:all .15s" onmouseover="this.style.borderColor='var(--navy)';this.style.background='var(--nl)'" onmouseout="this.style.borderColor='';this.style.background=''" onclick="goS('s2')">
+          <div style="width:38px;height:38px;border-radius:9px;background:var(--nl);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0"><i class="ti ti-users" style="color:var(--navy)"></i></div>
+          <div style="flex:1"><div style="font-size:13px;font-weight:500;margin-bottom:1px">Enroll &amp; assign tracks to my team</div><div style="font-size:11px;color:var(--ink3)">Review staff roles and confirm track assignments</div></div>
+          <i class="ti ti-arrow-right" style="color:var(--ink4);font-size:17px"></i>
+        </div>
+        <div style="border:1.5px solid var(--border);border-radius:var(--r2);padding:1rem 1.1rem;cursor:pointer;display:flex;align-items:center;gap:12px;transition:all .15s" onmouseover="this.style.borderColor='var(--navy)';this.style.background='var(--nl)'" onmouseout="this.style.borderColor='';this.style.background=''" onclick="launch('employer')">
+          <div style="width:38px;height:38px;border-radius:9px;background:var(--gl);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0"><i class="ti ti-chart-bar" style="color:var(--green)"></i></div>
+          <div style="flex:1"><div style="font-size:13px;font-weight:500;margin-bottom:1px">View team compliance dashboard</div><div style="font-size:11px;color:var(--ink3)">Track progress, AI readiness scores, and certificates</div></div>
+          <i class="ti ti-arrow-right" style="color:var(--ink4);font-size:17px"></i>
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--ink4);padding:.75rem 1rem;background:var(--canvas);border-radius:var(--r);border:1px solid var(--border)">
+        <i class="ti ti-info-circle" style="margin-right:5px"></i>Staff log in separately and see only their assigned tracks. A nurse will never see insurance or securities courses.
+      </div>
+    </div>
+    <div class="obs" id="s2">
+      <div class="ob-prog"><div class="ob-d dn"></div><div class="ob-d act"></div><div class="ob-d"></div></div>
+      <div class="ob-lbl">Step 2 of 3 — Track Assignment</div>
+      <div class="ob-t">Review staff role assignments</div>
+      <div class="ob-desc">Each staff member is assigned only the tracks relevant to their licensed profession.</div>
+      <div class="staff-list">
+        <div class="srow"><div class="sav" style="background:#0A6B55">SR</div><div style="flex:1"><div class="sname">Sarah Rodriguez, MD</div><div class="srole">Hospitalist · ICU</div></div><span class="stag" style="background:var(--tl);color:var(--teal2)">Healthcare AI</span></div>
+        <div class="srow"><div class="sav" style="background:#0F1F5C">JM</div><div style="flex:1"><div class="sname">Jordan Mitchell, RN</div><div class="srole">Emergency Nursing</div></div><span class="stag" style="background:var(--tl);color:var(--teal2)">Healthcare AI</span></div>
+        <div class="srow"><div class="sav" style="background:#4A3FB0">DK</div><div style="flex:1"><div class="sname">David Kim</div><div class="srole">Medical Coder</div></div><span class="stag" style="background:var(--tl);color:var(--teal2)">Healthcare AI</span></div>
+        <div class="srow"><div class="sav" style="background:#B03020">LP</div><div style="flex:1"><div class="sname">Lisa Park</div><div class="srole">Billing Specialist</div></div><span class="stag" style="background:var(--tl);color:var(--teal2)">Healthcare AI</span></div>
+        <div class="srow"><div class="sav" style="background:#A05000">MT</div><div style="flex:1"><div class="sname">Marcus Thompson, PA</div><div class="srole">Emergency Medicine</div></div><span class="stag" style="background:var(--tl);color:var(--teal2)">Healthcare AI</span></div>
+      </div>
+      <div style="font-size:12px;color:var(--ink3);background:var(--canvas);padding:.75rem 1rem;border-radius:var(--r);border:1px solid var(--border);margin-bottom:1.5rem"><strong style="color:var(--ink)">Why only Healthcare AI?</strong> All 5 staff hold clinical or administrative healthcare licenses. They will not see insurance, securities, real estate, or legal tracks.</div>
+      <div class="ob-acts">
+        <button class="btn btn-g" onclick="goS('s1')"><i class="ti ti-arrow-left"></i> Back</button>
+        <button class="btn btn-p" onclick="goS('s3')">Confirm assignments <i class="ti ti-arrow-right"></i></button>
+      </div>
+    </div>
+    <div class="obs" id="s3">
+      <div class="ob-prog"><div class="ob-d dn"></div><div class="ob-d dn"></div><div class="ob-d act"></div></div>
+      <div class="ob-lbl">Step 3 of 3 — Enrolled</div>
+      <div class="ob-t">Team enrolled successfully.</div>
+      <div class="ob-desc">5 staff members assigned to Healthcare AI Compliance. Manage progress from the Team Dashboard.</div>
+      <div style="background:var(--gl);border-radius:var(--r2);padding:1rem;margin-bottom:1rem;display:flex;gap:10px;align-items:flex-start">
+        <i class="ti ti-circle-check" style="color:var(--green);font-size:18px;flex-shrink:0;margin-top:1px"></i>
+        <div><div style="font-size:13px;font-weight:500;color:var(--green);margin-bottom:2px">Enrollment confirmed</div><div style="font-size:12px;color:#27500A">5 staff · Healthcare AI Compliance · Welcome emails sent</div></div>
+      </div>
+      <div style="background:var(--canvas);border-radius:var(--r2);padding:.9rem;margin-bottom:1.25rem;border:1px solid var(--border);font-size:12px;color:var(--ink3);display:flex;flex-direction:column;gap:6px">
+        <div style="display:flex;gap:8px"><i class="ti ti-mail" style="color:var(--ink4);font-size:14px"></i>Staff receive welcome emails with personalized login links</div>
+        <div style="display:flex;gap:8px"><i class="ti ti-chart-bar" style="color:var(--ink4);font-size:14px"></i>Progress tracking activates immediately</div>
+        <div style="display:flex;gap:8px"><i class="ti ti-sparkles" style="color:var(--ink4);font-size:14px"></i>AI-generated scenarios available immediately — infinite unique situations per role</div>
+        <div style="display:flex;gap:8px"><i class="ti ti-eye-off" style="color:var(--ink4);font-size:14px"></i>Staff see Healthcare AI only — no other industry tracks visible</div>
+      </div>
+      <div class="ob-acts">
+        <button class="btn btn-g" onclick="goS('s2')"><i class="ti ti-arrow-left"></i> Back</button>
+        <button class="btn btn-t" onclick="launch('employer')">Go to Team Dashboard <i class="ti ti-arrow-right"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- APP -->
+<div class="app" id="app">
+  <div class="topbar">
+    <div class="brand"><div class="bm">K</div><div class="bn">Kaplan <em>AI Ready</em></div><div class="bp">Beta</div></div>
+    <div class="tsrch"><i class="ti ti-search" style="color:var(--ink4)"></i><span>Search staff, courses, compliance status…</span></div>
+    <div class="tr">
+      <button class="tbtn"><i class="ti ti-bell"></i></button>
+      <button class="tbtn"><i class="ti ti-help-circle"></i></button>
+      <div class="uc"><strong id="org-admin-name">Patricia Chen</strong><span id="org-admin-role">Administrator · NMH</span></div>
+      <div class="uav" id="uav" style="background:var(--navy)">PC</div>
+    </div>
+  </div>
+  <div class="sidebar">
+    <div class="ns">Overview</div>
+    <button class="ni act" onclick="nav('employer',this)"><span class="ni-ic"><i class="ti ti-chart-bar"></i></span>Team Dashboard</button>
+    <button class="ni" onclick="nav('staff',this)"><span class="ni-ic"><i class="ti ti-users"></i></span>Staff Members<span class="ni-b">5</span></button>
+    <button class="ni" onclick="nav('news',this)"><span class="ni-ic"><i class="ti ti-news"></i></span>Regulatory News<span class="ni-b" style="background:var(--coral)">4</span></button>
+    <div class="ndiv"></div>
+    <div class="ns">Track Management</div>
+    <div class="titems" id="org-track-items">
+      <button class="titem act" onclick="loadCourse('health');nav('courses',null)"><span class="tdot" style="background:#0A6B55"></span>Healthcare AI<span class="tpct">Assigned</span></button>
+    </div>
+    <div style="padding:.5rem 1.25rem"><div id="org-track-note" style="font-size:11px;color:var(--ink4);padding:.5rem .5rem;line-height:1.5">Other tracks not assigned — staff hold healthcare licenses only</div></div>
+    <div class="ndiv"></div>
+    <div class="ns">Training</div>
+    <button class="ni" onclick="nav('simulator',this)"><span class="ni-ic"><i class="ti ti-robot"></i></span>AI Simulator<span style="margin-left:auto;font-size:9px;font-weight:700;background:linear-gradient(90deg,#0F1F5C,#4A3FB0);color:#fff;border-radius:3px;padding:2px 6px;letter-spacing:.04em">LIVE AI</span></button>
+    <button class="ni" onclick="nav('expert',this)"><span class="ni-ic"><i class="ti ti-message-chatbot"></i></span>Ask the Expert<span style="margin-left:auto;font-size:9px;font-weight:700;background:linear-gradient(90deg,#0A6B55,#0F1F5C);color:#fff;border-radius:3px;padding:2px 6px;letter-spacing:.04em">LIVE AI</span></button>
+    <div class="ndiv"></div>
+    <div class="ns">Progress</div>
+    <button class="ni" onclick="nav('score',this)"><span class="ni-ic"><i class="ti ti-chart-radar"></i></span>AI Readiness Score</button>
+    <button class="ni" onclick="nav('certs',this)"><span class="ni-ic"><i class="ti ti-certificate"></i></span>Certifications</button>
+    <button class="ni" onclick="nav('settings',this)"><span class="ni-ic"><i class="ti ti-settings"></i></span>Settings</button>
+    <div class="sbf">
+      <div class="sc" onclick="nav('score',null)" style="cursor:pointer;transition:opacity .15s" onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'">
+        <div class="sc-l">Team AI Readiness</div>
+        <div class="sc-v">74%</div>
+        <div class="sc-s" id="org-score-sub">5 staff · Healthcare track</div>
+        <div class="sc-b"><div class="sc-f" style="width:74%"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main" id="main">
+
+    <!-- EMPLOYER -->
+    <div class="view act" id="view-employer">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.25rem">
+        <div><div class="pt">Team Dashboard</div><div class="ps" style="margin-bottom:0"><span id="org-dashboard-sub">Northwestern Memorial Hospital · Healthcare AI Compliance</span></div></div>
+        <button class="btn btn-p btn-sm"><i class="ti ti-user-plus"></i> Add staff</button>
+      </div>
+      <div class="est" id="org-stats">
+        <div class="ec"><div class="ev">5</div><div class="elb">Staff Enrolled</div><div class="etr">Healthcare AI only</div></div>
+        <div class="ec" onclick="nav('score',null)" style="cursor:pointer;transition:all .15s" onmouseover="this.style.borderColor='var(--navy)'" onmouseout="this.style.borderColor='var(--border)'"><div class="ev">74%</div><div class="elb">Avg AI Readiness</div><div class="etr" style="color:var(--navy)">↑ 8 pts · View breakdown →</div></div>
+        <div class="ec"><div class="ev">3</div><div class="elb">Certs Earned</div><div class="etr">↑ 1 this month</div></div>
+        <div class="ec"><div class="ev" style="color:var(--amber)">2</div><div class="elb">Need Attention</div><div class="etr" style="color:var(--amber)">Below 50% readiness</div></div>
+      </div>
+      <!-- LEADERBOARD -->
+      <div class="shdr" style="margin-bottom:.75rem">
+        <h3 style="display:flex;align-items:center;gap:7px"><i class="ti ti-trophy" style="color:var(--gold)"></i>This Month's Leaderboard</h3>
+        <button class="lb" onclick="nav('score',null)">Full breakdown →</button>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:1.25rem" id="leaderboard-row">
+        <!-- Top 3 populated by buildLeaderboard() -->
+      </div>
+
+      <div class="egr">
+        <div>
+          <div class="shdr"><h3>Staff Members</h3><button class="btn btn-g btn-sm"><i class="ti ti-download"></i> Export report</button></div>
+          <div class="ttbl" id="staff-table">
+            <div class="thd"><span>Member</span><span>Score</span><span>Certs</span><span>Progress</span></div>
+            <div id="staff-table-rows"></div>
+          </div>
+        </div>
+        <div>
+          <div class="shdr"><h3>Compliance Alerts</h3></div>
+          <div class="card" style="margin-bottom:12px;display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:flex-start;gap:10px;padding:8px;background:var(--al);border-radius:var(--r);border-left:3px solid var(--amber)"><i class="ti ti-alert-triangle" style="color:var(--amber);font-size:16px;flex-shrink:0;margin-top:1px"></i><div><div style="font-size:12px;font-weight:500;color:var(--amber2)">2 staff below 50% AI Readiness</div><div style="font-size:11px;color:var(--ink3);margin-top:1px">HIPAA AI training incomplete — action needed</div></div></div>
+            <div style="display:flex;align-items:flex-start;gap:10px;padding:8px;background:var(--gl);border-radius:var(--r);border-left:3px solid var(--green)"><i class="ti ti-circle-check" style="color:var(--green);font-size:16px;flex-shrink:0;margin-top:1px"></i><div><div style="font-size:12px;font-weight:500;color:var(--green)">All nursing staff enrolled in Healthcare AI</div><div style="font-size:11px;color:var(--ink3);margin-top:1px">On track for Q2 HIPAA compliance certificate</div></div></div>
+            <div style="display:flex;align-items:flex-start;gap:10px;padding:8px;background:var(--nl);border-radius:var(--r);border-left:3px solid var(--navy)"><i class="ti ti-sparkles" style="color:var(--navy);font-size:16px;flex-shrink:0;margin-top:1px"></i><div><div style="font-size:12px;font-weight:500;color:var(--navy)">Live AI scenarios active</div><div style="font-size:11px;color:var(--ink3);margin-top:1px">Staff practicing with Claude-generated HIPAA scenarios</div></div></div>
+          </div>
+          <div class="shdr"><h3>Assigned Track</h3></div>
+          <div class="card">
+            <div style="display:flex;align-items:center;gap:12px;padding:.5rem 0">
+              <div style="width:36px;height:36px;border-radius:9px;background:var(--tl);display:flex;align-items:center;justify-content:center;font-size:16px">🏥</div>
+              <div style="flex:1"><div style="font-size:13px;font-weight:500;margin-bottom:2px">Healthcare AI Compliance</div><div style="font-size:11px;color:var(--ink3)">HIPAA · CMS · OIG · 4.5 CE hours · Live AI scenarios</div></div>
+              <button class="btn btn-sec btn-sm" onclick="loadCourse(ORGS[currentOrg].tracks[0].key);nav('courses',null)">View course</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NEWS FEED STRIP ON DASHBOARD -->
+      <div style="margin-top:1.25rem">
+        <div class="shdr">
+          <h3 style="display:flex;align-items:center;gap:7px"><i class="ti ti-news" style="color:var(--coral)"></i>Regulatory News — Healthcare AI</h3>
+          <button class="lb" onclick="nav('news',null)">See all →</button>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px" id="news-strip"></div>
+      </div>
+    </div>
+
+    <!-- REGULATORY NEWS VIEW -->
+    <div class="view" id="view-news">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.5rem">
+        <div>
+          <div class="pt">Regulatory News</div>
+          <div class="ps" style="margin-bottom:0">Latest AI-related regulatory developments for your Healthcare AI compliance track — updated as guidance evolves.</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:5px;background:var(--canvas);border:1px solid var(--border);border-radius:var(--r);padding:5px 12px;font-size:12px;color:var(--ink3)">
+          <i class="ti ti-filter" style="font-size:13px"></i> Healthcare AI
+        </div>
+      </div>
+
+      <!-- ALERT BANNER -->
+      <div style="background:var(--al);border:1px solid #E8C280;border-radius:var(--r2);padding:.9rem 1.1rem;margin-bottom:1.25rem;display:flex;align-items:flex-start;gap:10px">
+        <i class="ti ti-bell-ringing" style="color:var(--amber);font-size:18px;flex-shrink:0;margin-top:1px"></i>
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--amber2);margin-bottom:2px">4 new regulatory developments since your last login</div>
+          <div style="font-size:12px;color:var(--ink3)">HHS has issued updated guidance on AI in clinical documentation — Module 3 of your Healthcare AI course has been flagged for review.</div>
+        </div>
+        <button class="btn btn-g btn-sm" style="margin-left:auto;flex-shrink:0">Mark all read</button>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px" id="news-full"></div>
+    </div>
+
+    <!-- STAFF VIEW -->
+    <div class="view" id="view-staff">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.5rem">
+        <div><div class="pt" id="sv-name">Jordan Mitchell, RN</div><div class="ps" id="sv-role" style="margin-bottom:0">Emergency Nursing · Healthcare AI track</div></div>
+        <button class="btn btn-g btn-sm" onclick="nav('employer',null)"><i class="ti ti-arrow-left"></i> Back to team</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1.25rem">
+        <div class="mc"><div class="ml">AI Readiness Score</div><div class="mv" id="sv-score">82%</div><div class="ms" id="sv-ss">Top 20% of team</div></div>
+        <div class="mc"><div class="ml">Modules Complete</div><div class="mv" id="sv-mods">5 / 8</div><div class="ms">Healthcare track</div></div>
+        <div class="mc"><div class="ml">Certs Earned</div><div class="mv" id="sv-certs">1</div><div class="ms">Healthcare Fundamentals</div></div>
+      </div>
+      <div class="shdr"><h3>Course Progress — Healthcare AI Compliance</h3></div>
+      <div class="mlist" id="sv-mlist"></div>
+    </div>
+
+    <!-- COURSES -->
+    <div class="view" id="view-courses">
+      <div class="chero">
+        <div class="htag">🏥 Healthcare Track</div>
+        <div class="ht">AI Tools in Clinical Workflows</div>
+        <div class="hs">HIPAA-aligned · Kaplan Medical Faculty · 4.5 CE hours</div>
+        <div class="hst">
+          <div class="hst-item"><strong>68%</strong><span>Complete</span></div>
+          <div class="hst-item"><strong>5 / 8</strong><span>Modules</span></div>
+          <div class="hst-item"><strong>4.5 hrs</strong><span>CE Hours</span></div>
+        </div>
+        <button class="hb hbp" onclick="nav('simulator',null)"><i class="ti ti-player-play"></i> Practice in simulator</button>
+        <button class="hb hbs"><i class="ti ti-list"></i> Full syllabus</button>
+      </div>
+      <div class="shdr"><h3>Modules</h3></div>
+      <div class="mlist" id="mlist"></div>
+    </div>
+
+    <!-- SIMULATOR — LIVE AI -->
+    <div class="view" id="view-simulator">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:.5rem">
+        <div>
+          <div class="pt" style="margin-bottom:3px">AI Compliance Simulator</div>
+          <div class="ps" style="margin-bottom:0">Live scenarios generated by Claude — unique every time, grounded in real regulations for your staff's role.</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:5px;background:var(--gl);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:600;color:var(--green);flex-shrink:0;margin-top:4px">
+          <span style="width:6px;height:6px;border-radius:50%;background:var(--green);display:block;animation:ldpulse 2s infinite"></span>
+          Powered by Claude
+        </div>
+      </div>
+      <div style="margin-bottom:1.25rem"></div>
+      <div class="sim-shell">
+        <div class="sim-topbar">
+          <div class="sim-live-dot"></div>
+          <div style="font-size:14px;font-weight:500" id="sim-track-label">Live Simulation — Healthcare AI</div>
+          <div class="sim-ai-badge"><span class="sim-ai-star">✦</span>Claude-generated</div>
+          <div class="sim-score" id="sim-score">0 / 0</div>
+        </div>
+
+        <!-- CONTROLS -->
+        <div class="sim-controls">
+          <div class="sim-ctrl-group">
+            <div class="sim-ctrl-label">Difficulty</div>
+            <select class="sim-select" id="sim-diff">
+              <option value="foundational">Foundational</option>
+              <option value="intermediate" selected>Intermediate</option>
+              <option value="advanced">Advanced</option>
+            </select>
+          </div>
+          <div class="sim-ctrl-group">
+            <div class="sim-ctrl-label">Focus</div>
+            <select class="sim-select" id="sim-focus">
+              <option value="any">Any area</option>
+              <option value="documentation">Documentation</option>
+              <option value="disclosure">Client disclosure</option>
+              <option value="data">Data privacy</option>
+              <option value="supervision">Supervision</option>
+              <option value="bias">Algorithmic bias</option>
+            </select>
+          </div>
+          <div class="sim-ctrl-group">
+            <div class="sim-ctrl-label">Style</div>
+            <select class="sim-select" id="sim-style">
+              <option value="case" selected>Case study</option>
+              <option value="policy">Policy interpretation</option>
+              <option value="incident">Incident response</option>
+            </select>
+          </div>
+          <button class="gen-btn" id="gen-btn" onclick="generateScenario()">
+            <div class="gen-btn-shine"></div>
+            <svg class="gen-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+            Generate scenario
+          </button>
+        </div>
+
+        <div class="sim-body">
+          <!-- ERROR -->
+          <div class="sim-error" id="sim-error">
+            <i class="ti ti-alert-circle" style="font-size:16px;flex-shrink:0;margin-top:1px"></i>
+            <div><div style="font-weight:600;margin-bottom:2px">Generation failed</div><div id="sim-error-msg">Please try again.</div></div>
+          </div>
+
+          <!-- IDLE -->
+          <div class="sim-idle" id="sim-idle">
+            <div class="sim-idle-ring">✦</div>
+            <div class="sim-idle-title">Ready to generate your first scenario</div>
+            <div class="sim-idle-sub">Click <strong>Generate scenario</strong> above — Claude will create a unique HIPAA compliance situation for your healthcare staff in seconds. Every scenario is different.</div>
+            <div class="sim-idle-pills" id="sim-idle-pills">
+              <span class="idle-pill" style="background:var(--tl);color:var(--teal2)">HIPAA Privacy Rule</span>
+              <span class="idle-pill" style="background:var(--nl);color:var(--navy)">CMS Documentation</span>
+              <span class="idle-pill" style="background:var(--al);color:var(--amber2)">OIG Compliance</span>
+              <span class="idle-pill" style="background:var(--gl);color:var(--green)">False Claims Act</span>
+            </div>
+          </div>
+
+          <!-- LOADING -->
+          <div class="sim-loading" id="sim-loading">
+            <div class="sim-loading-hdr">
+              <div class="sim-spinner"></div>
+              <div>
+                <div class="sim-loading-title">Generating your scenario…</div>
+                <div class="sim-loading-sub">Claude is crafting a unique Healthcare AI compliance situation</div>
+              </div>
+            </div>
+            <div class="loading-steps">
+              <div class="lstep" id="ls1"><div class="lstep-d"></div>Selecting regulatory framework and scenario context<span class="lstep-ck">✓</span></div>
+              <div class="lstep" id="ls2"><div class="lstep-d"></div>Drafting a realistic clinical or administrative situation<span class="lstep-ck">✓</span></div>
+              <div class="lstep" id="ls3"><div class="lstep-d"></div>Generating answer choices with one clearly correct option<span class="lstep-ck">✓</span></div>
+              <div class="lstep" id="ls4"><div class="lstep-d"></div>Writing regulatory feedback and citation<span class="lstep-ck">✓</span></div>
+            </div>
+          </div>
+
+          <!-- QUESTION -->
+          <div class="sim-qwrap" id="sim-qwrap">
+            <div class="qhdr">
+              <div class="qctr" id="qctr">Question 1</div>
+              <div class="pips" id="pips"></div>
+            </div>
+            <div class="ai-scenario-hdr">
+              <div class="ai-hdr-top">
+                <div class="ai-role-badge" id="ai-role">Healthcare · HIPAA</div>
+                <div class="ai-fresh"><div class="ai-fresh-dot"></div>AI-generated · unique</div>
+              </div>
+              <div class="ai-scenario-label" id="ai-label">Scenario</div>
+              <div class="ai-scenario-text" id="ai-scenario"></div>
+              <div class="ai-reg"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span id="ai-reg"></span></div>
+            </div>
+            <div class="qtext" id="qtext"></div>
+            <div class="choices" id="choices"></div>
+            <div class="fb" id="fb">
+              <div class="fbh" id="fbh"></div>
+              <div id="fbb"></div>
+              <div class="fbc" id="fbc"></div>
+            </div>
+            <div class="sim-footer">
+              <div class="sim-hint" id="sim-hint">Select the best answer</div>
+              <div style="display:flex;gap:8px">
+                <button class="btn btn-g btn-sm" onclick="generateScenario()">↺ New scenario</button>
+                <button class="btn btn-p btn-sm" id="next-btn" style="display:none" onclick="generateScenario()">Next scenario →</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- RESULTS (after 3 answered) -->
+          <div class="sim-results" id="sim-results">
+            <div class="rring"><div class="rval" id="rval"></div></div>
+            <div class="rlbl" id="rlbl"></div>
+            <div class="rgrid">
+              <div class="rcard"><div class="rv2" id="rc"></div><div class="rl2">Correct</div></div>
+              <div class="rcard"><div class="rv2" id="rw"></div><div class="rl2">Incorrect</div></div>
+              <div class="rcard"><div class="rv2" id="rp"></div><div class="rl2">Score</div></div>
+            </div>
+            <div style="display:flex;gap:8px">
+              <button class="btn btn-g" onclick="resetSession()">↺ Start new session</button>
+              <button class="btn btn-p" onclick="nav('certs',null)">View certificates →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI READINESS SCORE -->
+    <div class="view" id="view-score">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.5rem">
+        <div>
+          <div class="pt">AI Readiness Score</div>
+          <div class="ps" style="margin-bottom:0">Team breakdown by regulatory domain — Healthcare AI Compliance track.</div>
+        </div>
+        <button class="btn btn-g btn-sm" onclick="openGapReport()"><i class="ti ti-download"></i> Export report</button>
+      </div>
+
+      <!-- TOP STAT ROW -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:1.5rem">
+        <div style="background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:var(--r2);padding:1.1rem;color:#fff;grid-column:1/2">
+          <div style="font-size:10px;opacity:.6;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px">Team AI Readiness</div>
+          <div style="font-size:36px;font-weight:600;font-family:'Playfair Display',serif;line-height:1">74%</div>
+          <div style="font-size:11px;opacity:.55;margin-top:4px">↑ 8 pts since enrollment</div>
+          <div style="height:3px;background:rgba(255,255,255,.2);border-radius:2px;margin-top:10px;overflow:hidden"><div style="height:100%;background:#fff;border-radius:2px;width:74%"></div></div>
+        </div>
+        <div class="mc"><div class="ml">Top Performer</div><div class="mv">91%</div><div class="ms">Sarah Rodriguez, MD</div></div>
+        <div class="mc"><div class="ml">Needs Attention</div><div class="mv" style="color:var(--amber)">2</div><div class="ms" style="color:var(--amber)">Below 50% threshold</div></div>
+        <div class="mc"><div class="ml">Scenarios Completed</div><div class="mv">47</div><div class="ms">Live AI-generated</div></div>
+      </div>
+
+      <!-- MAIN GRID -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.25rem">
+
+        <!-- RADAR CHART -->
+        <div class="card" style="padding:1.25rem">
+          <div class="shdr" style="margin-bottom:1rem"><h3>Domain Breakdown — Team Average</h3></div>
+          <div style="position:relative;width:100%;max-width:320px;margin:0 auto">
+            <svg id="radar-svg" viewBox="0 0 320 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;overflow:visible">
+              <!-- Grid rings -->
+              <g id="radar-grid" opacity="0.15"></g>
+              <!-- Axis lines -->
+              <g id="radar-axes" stroke="#DDD9CF" stroke-width="1"></g>
+              <!-- Team data polygon -->
+              <polygon id="radar-team" fill="#0F1F5C" fill-opacity="0.18" stroke="#0F1F5C" stroke-width="2" stroke-linejoin="round"/>
+              <!-- Dot markers -->
+              <g id="radar-dots"></g>
+              <!-- Labels -->
+              <g id="radar-labels" font-family="DM Sans,sans-serif"></g>
+            </svg>
+          </div>
+          <!-- LEGEND -->
+          <div style="display:flex;gap:16px;justify-content:center;margin-top:.5rem">
+            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--ink3)">
+              <div style="width:10px;height:10px;border-radius:2px;background:var(--navy);opacity:.7"></div>Team average
+            </div>
+          </div>
+        </div>
+
+        <!-- DOMAIN SCORES -->
+        <div class="card" style="padding:1.25rem">
+          <div class="shdr" style="margin-bottom:1rem"><h3>Score by Regulatory Domain</h3></div>
+          <div style="display:flex;flex-direction:column;gap:14px" id="domain-bars"></div>
+        </div>
+      </div>
+
+      <!-- STAFF BREAKDOWN -->
+      <div class="shdr"><h3>Individual AI Readiness Scores</h3><span style="font-size:11px;color:var(--ink4)">Healthcare AI track · HIPAA, CMS, OIG</span></div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;margin-bottom:1.25rem">
+        <div style="display:grid;grid-template-columns:1fr 60px 60px 60px 60px 60px 80px;padding:.6rem 1rem;background:var(--canvas);border-bottom:1px solid var(--border)">
+          <span style="font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.05em">Member</span>
+          <span style="font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.04em;text-align:center">HIPAA</span>
+          <span style="font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.04em;text-align:center">CMS</span>
+          <span style="font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.04em;text-align:center">OIG</span>
+          <span style="font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.04em;text-align:center">AI Tools</span>
+          <span style="font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.04em;text-align:center">Gov.</span>
+          <span style="font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.04em;text-align:center">Overall</span>
+        </div>
+        <div id="staff-score-rows"></div>
+      </div>
+
+      <!-- INSIGHT CARDS -->
+      <div class="shdr"><h3>Compliance Insights</h3></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:1rem">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:.65rem">
+            <div style="width:32px;height:32px;border-radius:8px;background:var(--gl);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0"><i class="ti ti-trending-up" style="color:var(--green)"></i></div>
+            <div style="font-size:13px;font-weight:500">Strongest domain</div>
+          </div>
+          <div style="font-size:22px;font-weight:600;font-family:'Playfair Display',serif;color:var(--green);margin-bottom:3px">HIPAA Privacy</div>
+          <div style="font-size:11px;color:var(--ink3)">Team average 88% — PHI handling and BAA requirements well understood</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:1rem">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:.65rem">
+            <div style="width:32px;height:32px;border-radius:8px;background:var(--al);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0"><i class="ti ti-alert-triangle" style="color:var(--amber)"></i></div>
+            <div style="font-size:13px;font-weight:500">Weakest domain</div>
+          </div>
+          <div style="font-size:22px;font-weight:600;font-family:'Playfair Display',serif;color:var(--amber);margin-bottom:3px">AI Governance</div>
+          <div style="font-size:11px;color:var(--ink3)">Team average 58% — hospital AI policy and oversight obligations need reinforcement</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:1rem">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:.65rem">
+            <div style="width:32px;height:32px;border-radius:8px;background:var(--nl);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0"><i class="ti ti-target" style="color:var(--navy)"></i></div>
+            <div style="font-size:13px;font-weight:500">Recommended action</div>
+          </div>
+          <div style="font-size:13px;font-weight:500;color:var(--navy);margin-bottom:3px">Assign Module 7</div>
+          <div style="font-size:11px;color:var(--ink3)">"AI Governance in Hospital Systems" directly addresses the team's lowest-scoring domain</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ASK THE EXPERT -->
+    <div class="view" id="view-expert">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:.5rem">
+        <div>
+          <div class="pt" style="margin-bottom:3px">Ask the Expert</div>
+          <div class="ps" style="margin-bottom:0">Ask any AI compliance question — get an answer grounded in your specific regulatory framework. Powered by Claude.</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:5px;background:var(--gl);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:600;color:var(--green);flex-shrink:0;margin-top:4px">
+          <span style="width:6px;height:6px;border-radius:50%;background:var(--green);display:block;animation:ldpulse 2s infinite"></span>
+          Powered by Claude
+        </div>
+      </div>
+      <div style="margin-bottom:1.25rem"></div>
+
+      <div style="display:grid;grid-template-columns:1fr 280px;gap:1.25rem;height:calc(100vh - 200px);min-height:500px">
+
+        <!-- CHAT PANEL -->
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r3);display:flex;flex-direction:column;overflow:hidden">
+
+          <!-- Chat header -->
+          <div style="background:linear-gradient(135deg,var(--navy),#1a3580);padding:.9rem 1.25rem;display:flex;align-items:center;gap:12px;flex-shrink:0">
+            <div style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0" id="expert-avatar">⚕</div>
+            <div>
+              <div id="expert-title" style="font-size:13px;font-weight:500;color:#fff">Healthcare AI Compliance Expert</div>
+              <div id="expert-spec" style="font-size:11px;color:rgba(255,255,255,.55);margin-top:1px">Specialising in HIPAA · CMS · OIG · FDA SaMD</div>
+            </div>
+            <div style="margin-left:auto;display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.12);border-radius:20px;padding:3px 10px;font-size:10px;font-weight:600;color:rgba(255,255,255,.8)">
+              <span style="width:5px;height:5px;border-radius:50%;background:#4ade80;display:block"></span>Online
+            </div>
+          </div>
+
+          <!-- Messages -->
+          <div id="chat-messages" style="flex:1;overflow-y:auto;padding:1.25rem;display:flex;flex-direction:column;gap:1rem">
+            <!-- Welcome message -->
+            <div style="display:flex;align-items:flex-start;gap:10px">
+              <div style="width:30px;height:30px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;color:#fff">⚕</div>
+              <div style="max-width:85%">
+                <div style="background:var(--canvas);border:1px solid var(--border);border-radius:0 var(--r2) var(--r2) var(--r2);padding:.85rem 1rem;font-size:13px;color:var(--ink2);line-height:1.65">
+                  Hello — I'm your Healthcare AI Compliance Expert, specialising in HIPAA, CMS documentation standards, OIG billing compliance, and the FDA's AI framework for medical software.<br><br>
+                  Ask me anything about using AI tools in your clinical or administrative workflow. I'll give you a specific, regulation-grounded answer — not generic AI advice.
+                </div>
+                <div style="font-size:10px;color:var(--ink4);margin-top:4px;padding-left:2px">Kaplan AI Ready Expert · Healthcare track</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Typing indicator (hidden by default) -->
+          <div id="typing-indicator" style="display:none;padding:0 1.25rem .75rem;align-items:center;gap:10px">
+            <div style="width:30px;height:30px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;flex-shrink:0">⚕</div>
+            <div style="background:var(--canvas);border:1px solid var(--border);border-radius:0 var(--r2) var(--r2) var(--r2);padding:.65rem .9rem;display:flex;align-items:center;gap:5px">
+              <span style="width:6px;height:6px;border-radius:50%;background:var(--ink4);animation:typeDot 1.2s infinite .0s"></span>
+              <span style="width:6px;height:6px;border-radius:50%;background:var(--ink4);animation:typeDot 1.2s infinite .2s"></span>
+              <span style="width:6px;height:6px;border-radius:50%;background:var(--ink4);animation:typeDot 1.2s infinite .4s"></span>
+            </div>
+          </div>
+
+          <!-- Input area -->
+          <div style="border-top:1px solid var(--border);padding:1rem 1.25rem;flex-shrink:0">
+            <div style="display:flex;gap:8px;align-items:flex-end">
+              <textarea id="expert-input" placeholder="Ask a compliance question… e.g. 'Can I use an AI scribe if the vendor has a BAA but I haven't verified the email channel?'" style="flex:1;background:var(--canvas);border:1px solid var(--border);border-radius:var(--r2);padding:10px 12px;font-size:13px;font-family:inherit;color:var(--ink2);outline:none;resize:none;min-height:52px;max-height:120px;line-height:1.5;transition:border-color .15s" onkeydown="handleExpertKey(event)" oninput="autoResize(this)"></textarea>
+              <button id="expert-send-btn" onclick="sendExpertMessage()" style="width:42px;height:42px;background:var(--navy);border:none;border-radius:var(--r2);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0" onmouseover="this.style.background='var(--navy2)'" onmouseout="this.style.background='var(--navy)'">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              </button>
+            </div>
+            <div style="font-size:11px;color:var(--ink4);margin-top:6px;display:flex;align-items:center;gap:4px">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+              Answers are grounded in your assigned track — Healthcare AI compliance only · Press Enter to send
+            </div>
+          </div>
+        </div>
+
+        <!-- SIDEBAR: Suggested questions + context -->
+        <div style="display:flex;flex-direction:column;gap:12px">
+
+          <!-- Track context -->
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:1rem">
+            <div style="font-size:11px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.75rem">Your regulatory context</div>
+            <div id="expert-context-list" style="display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ink2)"><span style="width:6px;height:6px;border-radius:50%;background:var(--teal);flex-shrink:0"></span>HIPAA Privacy Rule</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ink2)"><span style="width:6px;height:6px;border-radius:50%;background:var(--teal);flex-shrink:0"></span>HIPAA Security Rule</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ink2)"><span style="width:6px;height:6px;border-radius:50%;background:var(--navy);flex-shrink:0"></span>CMS Documentation Standards</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ink2)"><span style="width:6px;height:6px;border-radius:50%;background:var(--navy);flex-shrink:0"></span>OIG Compliance Guidelines</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ink2)"><span style="width:6px;height:6px;border-radius:50%;background:var(--purple);flex-shrink:0"></span>FDA SaMD Framework</div>
+              <div style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ink2)"><span style="width:6px;height:6px;border-radius:50%;background:var(--coral);flex-shrink:0"></span>False Claims Act</div>
+            </div>
+          </div>
+
+          <!-- Suggested questions -->
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:1rem;flex:1">
+            <div style="font-size:11px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.75rem">Try asking…</div>
+            <div style="display:flex;flex-direction:column;gap:6px" id="suggested-qs">
+              <button class="expert-suggestion" onclick="useExpertSuggestion(this)">Can I use ChatGPT to summarize patient records if I redact the name first?</button>
+              <button class="expert-suggestion" onclick="useExpertSuggestion(this)">What makes an AI ambient documentation tool HIPAA-compliant?</button>
+              <button class="expert-suggestion" onclick="useExpertSuggestion(this)">If an AI coding tool suggests an incorrect CPT code, who is liable?</button>
+              <button class="expert-suggestion" onclick="useExpertSuggestion(this)">Can we use a free AI chatbot to answer patient portal messages?</button>
+              <button class="expert-suggestion" onclick="useExpertSuggestion(this)">What is a Business Associate Agreement and when do we need one for AI tools?</button>
+              <button class="expert-suggestion" onclick="useExpertSuggestion(this)">Does the FDA regulate AI tools used in clinical decision support?</button>
+            </div>
+          </div>
+
+          <!-- Disclaimer -->
+          <div style="background:var(--canvas);border:1px solid var(--border);border-radius:var(--r);padding:.75rem;font-size:11px;color:var(--ink4);line-height:1.5">
+            <strong style="color:var(--ink3)">Educational guidance only.</strong> Answers are based on Kaplan's regulatory curriculum and should not be construed as legal advice. Consult qualified counsel for specific compliance decisions.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CERTS -->
+    <div class="view" id="view-certs">
+      <div class="pt">Certifications</div>
+      <div class="ps">Kaplan AI Ready credentials mapped to your regulatory framework.</div>
+      <div class="cg">
+        <div class="ccard">
+          <div class="ccic" style="background:var(--tl)"><i class="ti ti-certificate" style="color:var(--teal);font-size:20px"></i></div>
+          <div style="flex:1"><div class="ccn">AI Ready: Healthcare Fundamentals</div><div class="ccm">HIPAA-aligned · 2.5 CE hrs · Earned May 12, 2026<br>Earned by: Sarah Rodriguez, Jordan Mitchell, David Kim</div><button class="ccb e" onclick="document.getElementById('cert-modal').classList.add('op')"><i class="ti ti-download"></i> Download PDF</button></div>
+        </div>
+        <div class="ccard">
+          <div class="ccic" style="background:var(--nl);opacity:.7"><i class="ti ti-certificate" style="color:var(--navy);font-size:20px"></i></div>
+          <div style="flex:1"><div class="ccn">AI Ready: Clinical Compliance Professional</div><div class="ccm">Complete modules 6–8 to unlock · 4.5 CE hrs total · Team avg: 68%</div>
+            <div style="margin-bottom:.5rem"><div style="font-size:10px;color:var(--ink4);margin-bottom:3px;display:flex;justify-content:space-between"><span>Team progress</span><span>68%</span></div><div class="pb"><div class="pf" style="width:68%;background:var(--navy)"></div></div></div>
+            <button class="ccb p" onclick="nav('courses',null)">Continue course →</button>
+          </div>
+        </div>
+        <div class="ccard" style="opacity:.5">
+          <div class="ccic" style="background:var(--nl)"><i class="ti ti-certificate" style="color:var(--ink4);font-size:20px"></i></div>
+          <div style="flex:1"><div class="ccn">AI Ready: Securities — FINRA Track</div><div class="ccm">Not assigned — no staff with securities licenses</div><button class="ccb l">Not applicable</button></div>
+        </div>
+        <div class="ccard" style="opacity:.5">
+          <div class="ccic" style="background:var(--nl)"><i class="ti ti-certificate" style="color:var(--ink4);font-size:20px"></i></div>
+          <div style="flex:1"><div class="ccn">AI Ready: Insurance Compliance</div><div class="ccm">Not assigned — no staff with insurance licenses</div><button class="ccb l">Not applicable</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="view" id="view-settings">
+      <div class="pt">Settings</div>
+      <div class="ps">Manage track assignments, AI scenario settings, and organization preferences.</div>
+      <div class="card" style="max-width:500px;margin-bottom:1rem">
+        <div style="font-size:13px;font-weight:600;margin-bottom:1rem">Track Assignment Rules</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;align-items:center;gap:12px;padding:.75rem 1rem;background:var(--canvas);border-radius:var(--r);border:1px solid var(--border)"><div style="flex:1"><div style="font-size:13px;font-weight:500">Healthcare AI Compliance</div><div style="font-size:11px;color:var(--ink3)">Assigned to: Clinical staff, Coders, Billing · Live AI scenarios enabled</div></div><span style="font-size:10px;font-weight:600;background:var(--gl);color:var(--green);padding:2px 8px;border-radius:4px">ACTIVE</span></div>
+          <div style="display:flex;align-items:center;gap:12px;padding:.75rem 1rem;background:var(--canvas);border-radius:var(--r);border:1px solid var(--border);opacity:.55"><div style="flex:1"><div style="font-size:13px;font-weight:500">Securities AI Compliance</div><div style="font-size:11px;color:var(--ink3)">No staff with securities licenses</div></div><span style="font-size:10px;font-weight:600;background:var(--canvas);color:var(--ink4);padding:2px 8px;border-radius:4px;border:1px solid var(--border)">NOT ASSIGNED</span></div>
+          <div style="display:flex;align-items:center;gap:12px;padding:.75rem 1rem;background:var(--canvas);border-radius:var(--r);border:1px solid var(--border);opacity:.55"><div style="flex:1"><div style="font-size:13px;font-weight:500">Insurance AI Compliance</div><div style="font-size:11px;color:var(--ink3)">No staff with insurance licenses</div></div><span style="font-size:10px;font-weight:600;background:var(--canvas);color:var(--ink4);padding:2px 8px;border-radius:4px;border:1px solid var(--border)">NOT ASSIGNED</span></div>
+        </div>
+      </div>
+      <div class="card" style="max-width:500px">
+        <div style="font-size:13px;font-weight:600;margin-bottom:.75rem;display:flex;align-items:center;gap:7px"><i class="ti ti-sparkles" style="color:var(--navy)"></i>Live AI Scenario Settings</div>
+        <div style="font-size:12px;color:var(--ink3);line-height:1.6">Scenarios are generated by Claude in real time — grounded in real regulatory frameworks for the assigned track. Difficulty and focus area can be set by staff or locked by the administrator. All generated scenarios are logged for audit purposes.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- STAFF MODAL -->
+<div class="mo" id="staff-modal">
+  <div class="mod">
+    <div class="mhd"><div class="mtt" id="sm-name">Jordan Mitchell, RN</div><button class="mcl" onclick="document.getElementById('staff-modal').classList.remove('op')"><i class="ti ti-x"></i></button></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.25rem">
+      <div style="background:var(--canvas);border-radius:var(--r);padding:.75rem;text-align:center"><div style="font-size:20px;font-weight:600;font-family:'Playfair Display',serif" id="sm-score">82%</div><div style="font-size:11px;color:var(--ink4);margin-top:2px">AI Readiness</div></div>
+      <div style="background:var(--canvas);border-radius:var(--r);padding:.75rem;text-align:center"><div style="font-size:20px;font-weight:600;font-family:'Playfair Display',serif" id="sm-mods">5/8</div><div style="font-size:11px;color:var(--ink4);margin-top:2px">Modules done</div></div>
+      <div style="background:var(--canvas);border-radius:var(--r);padding:.75rem;text-align:center"><div style="font-size:20px;font-weight:600;font-family:'Playfair Display',serif" id="sm-certs">1</div><div style="font-size:11px;color:var(--ink4);margin-top:2px">Certificates</div></div>
+    </div>
+    <div style="font-size:12px;font-weight:600;margin-bottom:.5rem">Assigned Track</div>
+    <div style="display:flex;align-items:center;gap:10px;padding:.75rem 1rem;background:var(--tl);border-radius:var(--r);margin-bottom:1rem">
+      <span style="font-size:16px">🏥</span>
+      <div><div style="font-size:13px;font-weight:500;color:var(--teal2)">Healthcare AI Compliance</div><div style="font-size:11px;color:var(--teal)">HIPAA · CMS · OIG — with live AI scenario practice</div></div>
+    </div>
+    <div style="display:flex;gap:8px;justify-content:flex-end">
+      <button class="btn btn-g" onclick="document.getElementById('staff-modal').classList.remove('op')">Close</button>
+      <button class="btn btn-p" onclick="document.getElementById('staff-modal').classList.remove('op');nav('simulator',null)">Open simulator →</button>
+    </div>
+  </div>
+</div>
+
+<!-- CERT MODAL -->
+<div class="mo" id="cert-modal">
+  <div class="mod">
+    <div class="mhd"><div class="mtt">Certificate of Completion</div><button class="mcl" onclick="document.getElementById('cert-modal').classList.remove('op')"><i class="ti ti-x"></i></button></div>
+    <div style="background:linear-gradient(135deg,#0F1F5C,#0A1640);border-radius:var(--r2);padding:2rem;text-align:center;color:#fff;margin-bottom:1.25rem">
+      <div style="font-size:10px;opacity:.5;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem">Kaplan AI Ready</div>
+      <div style="font-family:'Playfair Display',serif;font-size:20px;margin-bottom:.25rem">Certificate of Completion</div>
+      <div style="font-size:12px;opacity:.6;margin-bottom:.85rem">This certifies that</div>
+      <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:500;margin-bottom:.2rem">Jordan Mitchell</div>
+      <div style="font-size:12px;opacity:.6;margin-bottom:.85rem">has successfully completed</div>
+      <div style="font-size:14px;font-weight:500;margin-bottom:.2rem">AI Tools in Clinical Workflows</div>
+      <div style="font-size:11px;opacity:.55;margin-bottom:1.25rem">Healthcare Fundamentals · HIPAA-aligned · 2.5 CE Hours</div>
+      <div style="display:flex;justify-content:center;gap:2rem;font-size:10px;opacity:.5"><div>Issued: May 12, 2026</div><div>Cert ID: KAR-HC-2026-0412</div></div>
+    </div>
+    <div style="display:flex;gap:8px;justify-content:flex-end">
+      <button class="btn btn-g" onclick="document.getElementById('cert-modal').classList.remove('op')">Close</button>
+      <button class="btn btn-p"><i class="ti ti-download"></i> Download PDF</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════ DATA ═══════
+// ═══════ ORG CONFIG ═══════
+const ORGS = {
+  health: {
+    name:'Northwestern Memorial Hospital',admin:'Patricia Chen',adminRole:'Administrator · NMH',adminInitials:'PC',adminColor:'var(--navy)',
+    subtitle:'Northwestern Memorial Hospital · Healthcare AI Compliance',scoreSub:'5 staff · Healthcare track',teamScore:'74%',
+    simTopLabel:'Live Simulation — Healthcare AI',
+    simIdlePills:[
+      {label:'HIPAA Privacy Rule',bg:'var(--tl)',color:'var(--teal2)'},
+      {label:'CMS Documentation',bg:'var(--nl)',color:'var(--navy)'},
+      {label:'OIG Compliance',bg:'var(--al)',color:'var(--amber2)'},
+      {label:'False Claims Act',bg:'var(--gl)',color:'var(--green)'},
+    ],
+    expertAvatar:'⚕',expertTitle:'Healthcare AI Compliance Expert',expertSpec:'Specialising in HIPAA · CMS · OIG · FDA SaMD',
+    expertContext:[
+      {label:'HIPAA Privacy Rule',color:'var(--teal)'},{label:'HIPAA Security Rule',color:'var(--teal)'},
+      {label:'CMS Documentation Standards',color:'var(--navy)'},{label:'OIG Compliance Guidelines',color:'var(--navy)'},
+      {label:'FDA SaMD Framework',color:'var(--purple)'},{label:'False Claims Act',color:'var(--coral)'},
+    ],
+    expertSuggestions:[
+      'Can I use ChatGPT to summarize patient records if I redact the name first?',
+      'What makes an AI ambient documentation tool HIPAA-compliant?',
+      'If an AI coding tool suggests an incorrect CPT code, who is liable?',
+      'Can we use a free AI chatbot to answer patient portal messages?',
+      'What is a Business Associate Agreement and when do we need one for AI tools?',
+      'Does the FDA regulate AI tools used in clinical decision support?',
+    ],
+    tracks:[{key:'health',label:'Healthcare AI',color:'#0A6B55',note:'Assigned'}],
+    trackNote:'Other tracks not assigned — staff hold healthcare licenses only',
+    statsOverride:null,
+    news:null, // uses global NEWS array
+  },
+  fin: {
+    name:'Merrill Lynch Advisory Team',admin:'Robert Kim',adminRole:'Administrator · ML',adminInitials:'RK',adminColor:'#185FA5',
+    subtitle:'Merrill Lynch Advisory Team · Securities + CFP® AI Compliance',scoreSub:'8 staff · Securities + CFP® tracks',teamScore:'81%',
+    simTopLabel:'Live Simulation — Securities + CFP® AI',
+    simIdlePills:[
+      {label:'Regulation Best Interest',bg:'var(--nl)',color:'var(--navy)'},
+      {label:'SEC Reg AC',bg:'var(--nl)',color:'var(--navy)'},
+      {label:'FINRA Rule 3110',bg:'var(--pl)',color:'var(--purple)'},
+      {label:'CFP Board Fiduciary',bg:'var(--tl)',color:'var(--teal2)'},
+    ],
+    expertAvatar:'📊',expertTitle:'Securities & Wealth AI Compliance Expert',expertSpec:'Specialising in FINRA · SEC · Reg BI · CFP Board Standards',
+    expertContext:[
+      {label:'SEC Regulation Best Interest',color:'var(--navy)'},{label:'SEC Regulation AC',color:'var(--navy)'},
+      {label:'FINRA Rule 2241',color:'var(--navy)'},{label:'FINRA Rule 3110',color:'var(--purple)'},
+      {label:'CFP Board Fiduciary Standard',color:'var(--teal)'},{label:'Investment Advisers Act 1940',color:'var(--coral)'},
+    ],
+    expertSuggestions:[
+      'Can I use AI to help draft a client research note and still certify it under Reg AC?',
+      'What are my Reg BI obligations if an AI system recommends a product to a client?',
+      'Does using AI for trade surveillance satisfy FINRA Rule 3110 supervisory requirements?',
+      'As a CFP®, what is my fiduciary obligation when AI recommends a higher-commission product?',
+      'Can AI-generated financial plans be shared with clients without advisor review?',
+      'What disclosures are required when AI is used in client discovery or risk profiling?',
+    ],
+    tracks:[
+      {key:'fin',label:'Securities AI',color:'#0F1F5C',note:'Assigned'},
+      {key:'cfp',label:'CFP® & Wealth AI',color:'#4A3FB0',note:'Assigned'},
+    ],
+    trackNote:'Healthcare, insurance, and legal tracks not assigned — staff hold securities/financial licenses',
+    statsOverride:[
+      {val:'8',  label:'Staff Enrolled',   trend:'Securities + CFP® tracks',    trendColor:'var(--teal)', click:false},
+      {val:'81%',label:'Avg AI Readiness', trend:'↑ 12 pts · View breakdown →', trendColor:'var(--navy)', click:true},
+      {val:'6',  label:'Certs Earned',     trend:'↑ 2 this month',              trendColor:'var(--teal)', click:false},
+      {val:'1',  label:'Need Attention',   trend:'Below 50% readiness',         trendColor:'var(--amber)',click:false,warn:true},
+    ],
+    news:[
+      {id:'f1',unread:true,tag:'SEC Guidance',tagColor:'var(--nl)',tagText:'var(--navy)',icon:'📋',iconBg:'var(--nl)',
+       headline:'SEC issues guidance on AI use in investment research and analyst certification',
+       body:'The SEC clarified that Reg AC certification requirements apply equally to AI-assisted research — registered analysts must personally certify all views, regardless of AI involvement in drafting.',
+       detail:'No AI tool can satisfy the personal certification requirement under Reg AC. Analysts who publish AI-drafted research without independently verifying the conclusions risk violating 17 CFR §242.500. Firms should add a mandatory analyst review checkpoint before any AI-assisted report is distributed.',
+       source:'SEC',date:'May 16, 2026',impact:'high',impactLabel:'High Impact',action:'Ask the Expert',actionNav:'expert',reg:'SEC Regulation AC · 17 CFR §242.500'},
+      {id:'f2',unread:true,tag:'FINRA Alert',tagColor:'var(--al)',tagText:'var(--amber2)',icon:'⚠️',iconBg:'var(--al)',
+       headline:'FINRA reminds firms: AI surveillance systems require documented human review thresholds',
+       body:'FINRA issued a regulatory notice reminding broker-dealers that Written Supervisory Procedures must specifically address how AI surveillance alerts are escalated for human review.',
+       detail:'Firms cannot delegate supervisory judgment entirely to AI systems. Compliance officers reviewing only high-confidence alerts — without documented rationale for excluding lower-confidence flags — may be found to have inadequate supervisory systems under Rule 3110.',
+       source:'FINRA',date:'May 10, 2026',impact:'high',impactLabel:'Action Needed',action:'Ask the Expert',actionNav:'expert',reg:'FINRA Rule 3110 · FINRA Regulatory Notice 21-16'},
+      {id:'f3',unread:true,tag:'CFP Board',tagColor:'var(--tl)',tagText:'var(--teal2)',icon:'💼',iconBg:'var(--tl)',
+       headline:'CFP Board updates AI ethics guidance for financial planning professionals',
+       body:'The CFP Board published updated guidance clarifying that the fiduciary standard applies regardless of whether advice is AI-generated, AI-assisted, or produced entirely by the CFP® professional.',
+       detail:'CFP® professionals remain personally responsible for the accuracy of all advice, including verification of regulatory thresholds that AI tools may not reflect accurately due to training data cutoffs.',
+       source:'CFP Board',date:'Apr 28, 2026',impact:'med',impactLabel:'Action Needed',action:'Ask the Expert',actionNav:'expert',reg:'CFP Board Standards of Conduct · Fiduciary Standard'},
+      {id:'f4',unread:false,tag:'Industry',tagColor:'var(--gl)',tagText:'var(--green)',icon:'📊',iconBg:'var(--gl)',
+       headline:'SIFMA survey: 71% of broker-dealers use AI tools without formal Reg BI compliance training',
+       body:'Nearly three-quarters of SIFMA member firms have deployed AI tools that touch client recommendations or research, but fewer than one in four have provided staff with specific training on Reg BI compliance obligations.',
+       detail:'AI use is most prevalent in research synthesis (68%), client communication drafting (55%), and portfolio monitoring (47%). Most firms rely on vendor documentation rather than independent compliance training — creating Reg BI exposure as SEC examinations shift toward AI oversight.',
+       source:'SIFMA',date:'Apr 8, 2026',impact:'info',impactLabel:'Context',action:null,actionNav:null,reg:'SIFMA AI in Capital Markets Survey 2026'},
+    ],
+    domains:[
+      {label:'Reg BI',       full:'Regulation Best Interest & Suitability', team:88, color:'#0F1F5C'},
+      {label:'Research',     full:'Research Integrity & Reg AC',            team:84, color:'#4A3FB0'},
+      {label:'Surveillance', full:'Trade Surveillance & FINRA 3110',        team:80, color:'#0A6B55'},
+      {label:'CFP Ethics',   full:'CFP Board Ethics & Fiduciary Duty',      team:79, color:'#A05000'},
+      {label:'Disclosure',   full:'Client Disclosure & Transparency',       team:72, color:'#B03020'},
+    ],
+    staffScores:[
+      {key:'AW',name:'Alexandra Wong, CFP®',role:'Sr. Wealth Advisor',     av:'#0F1F5C',scores:[95,90,88,96,92],overall:94},
+      {key:'MT',name:'Marcus Torres',       role:'Registered Rep',          av:'#0A6B55',scores:[92,88,90,82,88],overall:88},
+      {key:'SP',name:'Samantha Price',      role:'Research Analyst',        av:'#4A3FB0',scores:[85,95,78,80,82],overall:82},
+      {key:'JL',name:'James Liu',           role:'Compliance Officer',      av:'#B03020',scores:[88,82,88,76,78],overall:79},
+      {key:'ER',name:'Elena Reyes, CFP®',   role:'Financial Planner',       av:'#A05000',scores:[80,78,72,88,78],overall:76},
+      {key:'CB',name:'Chris Baker',         role:'Portfolio Manager',        av:'#C89020',scores:[78,76,72,68,72],overall:71},
+      {key:'NK',name:'Nadia Kaur',          role:'Client Associate',         av:'#2D6B1A',scores:[70,65,62,68,60],overall:65},
+      {key:'DP',name:'Daniel Park',         role:'Registered Rep',           av:'#5F5E5A',scores:[50,45,42,40,38],overall:43},
+    ],
+    scoreInsights:[
+      {icon:'ti-trending-up',  bg:'var(--gl)',color:'var(--green)',title:'Strongest domain',  val:'Reg BI Suitability',  valColor:'var(--green)', body:'Team average 88% — best interest obligation and AI recommendation oversight well understood'},
+      {icon:'ti-alert-triangle',bg:'var(--al)',color:'var(--amber)',title:'Weakest domain',   val:'Client Disclosure',   valColor:'var(--amber)', body:'Team average 72% — transparency obligations when AI is involved in advice need reinforcement'},
+      {icon:'ti-target',       bg:'var(--nl)',color:'var(--navy)', title:'Recommended action',val:'Assign Module 5',     valColor:'var(--navy)',  body:'\"AI in Client Communications & Disclosures\" directly addresses the team\'s lowest-scoring domain'},
+    ],
+  },
+};
+
+let currentOrg = 'health';
+
+function selectOrg(key, el){
+  currentOrg = key;
+  document.querySelectorAll('.org-option').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  document.querySelectorAll('[id^="org-check-"]').forEach(c=>{c.style.background='var(--border2)';c.style.opacity='0.3';});
+  const chk = document.getElementById('org-check-'+key);
+  if(chk){chk.style.background='var(--navy)';chk.style.opacity='1';}
+}
+
+function applyOrg(){
+  const org = ORGS[currentOrg];
+  // Topbar — all null-guarded so timing issues can't crash
+  const an=document.getElementById('org-admin-name'); if(an) an.textContent=org.admin;
+  const ar=document.getElementById('org-admin-role'); if(ar) ar.textContent=org.adminRole;
+  const uav=document.getElementById('uav');
+  if(uav){uav.textContent=org.adminInitials;uav.style.background=org.adminColor;}
+  // Dashboard subtitle
+  const sub = document.getElementById('org-dashboard-sub');
+  if(sub) sub.textContent = org.subtitle;
+  // Sidebar score
+  const scoreSub = document.getElementById('org-score-sub');
+  if(scoreSub) scoreSub.textContent = org.scoreSub;
+  const scoreVal = document.querySelector('.sc-v');
+  if(scoreVal) scoreVal.textContent = org.teamScore;
+  // Sidebar tracks
+  const container = document.getElementById('org-track-items');
+  if(container){
+    container.innerHTML='';
+    org.tracks.forEach(t=>{
+      const btn=document.createElement('button');
+      btn.className='titem';
+      btn.innerHTML=`<span class="tdot" style="background:${t.color}"></span>${t.label}<span class="tpct">${t.note}</span>`;
+      btn.onclick=()=>{loadCourse(t.key);nav('courses',null);};
+      container.appendChild(btn);
+    });
+  }
+  const tn = document.getElementById('org-track-note');
+  if(tn) tn.textContent = org.trackNote;
+  // Sim top label
+  const simLabel = document.getElementById('sim-track-label'); if(simLabel) simLabel.textContent = org.simTopLabel;
+  // Sim idle pills
+  const pills = document.getElementById('sim-idle-pills');
+  if(pills){
+    pills.innerHTML='';
+    org.simIdlePills.forEach(p=>{
+      pills.innerHTML+=`<span class="idle-pill" style="background:${p.bg};color:${p.color}">${p.label}</span>`;
+    });
+  }
+  // Expert panel
+  const ea=document.getElementById('expert-avatar');if(ea)ea.textContent=org.expertAvatar;
+  const et=document.getElementById('expert-title');if(et)et.textContent=org.expertTitle;
+  const es=document.getElementById('expert-spec');if(es)es.textContent=org.expertSpec;
+  const ctx=document.getElementById('expert-context-list');
+  if(ctx){ctx.innerHTML='';org.expertContext.forEach(r=>{ctx.innerHTML+=`<div style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ink2)"><span style="width:6px;height:6px;border-radius:50%;background:${r.color};flex-shrink:0"></span>${r.label}</div>`;});}
+  const sugg=document.getElementById('suggested-qs');
+  if(sugg){sugg.innerHTML='';org.expertSuggestions.forEach(q=>{sugg.innerHTML+=`<button class="expert-suggestion" onclick="useExpertSuggestion(this)">${q}</button>`;});}
+  // Reset expert chat
+  expertHistory=[];
+  const msgs=document.getElementById('chat-messages');
+  if(msgs) msgs.innerHTML=`<div style="display:flex;align-items:flex-start;gap:10px"><div style="width:30px;height:30px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;color:#fff">${org.expertAvatar}</div><div style="max-width:85%"><div style="background:var(--canvas);border:1px solid var(--border);border-radius:0 var(--r2) var(--r2) var(--r2);padding:.85rem 1rem;font-size:13px;color:var(--ink2);line-height:1.65">Hello — I'm your ${org.expertTitle}.<br><br>Ask me anything about using AI tools in your workflow. I'll give you a specific, regulation-grounded answer based on the frameworks governing your licensed role.</div><div style="font-size:10px;color:var(--ink4);margin-top:4px;padding-left:2px">Kaplan AI Ready Expert · ${org.tracks.map(t=>t.label).join(' + ')} track</div></div></div>`;
+  // Reset simulator to idle when org switches
+  simSt={answered:false,results:[],loadInt:null,currentQ:null};
+  updateScore();
+  showState('idle');
+  // Rebuild news and employer stats
+  buildEmployerStats(org);
+  buildStaffTable();
+  buildNewsFeed();
+  buildLeaderboard();
+}
+
+function buildStaffTable(){
+  const el = document.getElementById('staff-table-rows');
+  if(!el) return;
+  const staffMap = getStaffData();
+  el.innerHTML='';
+  Object.entries(staffMap).forEach(([key,s])=>{
+    const pct = parseInt(s.score);
+    const chipClass = pct>=80?'sh':pct>=60?'sm2':'sl';
+    const row = document.createElement('div');
+    row.className='trow';
+    row.onclick=()=>viewStaff(key);
+    row.innerHTML=`
+      <div class="minf">
+        <div class="mav2" style="background:${s.av}">${key}</div>
+        <div><div class="mn2">${s.name}</div><div class="mr2">${s.role}</div></div>
+      </div>
+      <div><span class="sch ${chipClass}">${s.score}</span></div>
+      <div style="font-size:13px;font-weight:500">${s.certs}</div>
+      <div class="mbw"><div class="mb"><div class="mf" style="width:${pct}%"></div></div><span style="font-size:11px;color:var(--ink3)">${s.score}</span></div>`;
+    el.appendChild(row);
+  });
+}
+
+function buildEmployerStats(org){
+  const statsEl = document.getElementById('org-stats');
+  if(!org.statsOverride || !statsEl) return;
+  statsEl.innerHTML='';
+  org.statsOverride.forEach(s=>{
+    const div=document.createElement('div');
+    div.className='ec';
+    if(s.click){div.style.cursor='pointer';div.onclick=()=>nav('score',null);div.onmouseover=()=>div.style.borderColor='var(--navy)';div.onmouseout=()=>div.style.borderColor='var(--border)';}
+    div.innerHTML=`<div class="ev"${s.warn?' style="color:var(--amber)"':''}>${s.val}</div><div class="elb">${s.label}</div><div class="etr" style="color:${s.trendColor}">${s.trend}</div>`;
+    statsEl.appendChild(div);
+  });
+}
+
+const ORG_STAFF_DATA = {
+  health:{
+    SR:{name:'Sarah Rodriguez, MD',  role:'Hospitalist · ICU',          score:'91%',ss:'Top 10% of team',           mods:'7/8',certs:'2',av:'#0A6B55'},
+    JM:{name:'Jordan Mitchell, RN',  role:'Emergency Nursing',           score:'82%',ss:'Top 20% of team',           mods:'5/8',certs:'1',av:'#0F1F5C'},
+    DK:{name:'David Kim',            role:'Medical Coder',               score:'67%',ss:'Above average',             mods:'4/8',certs:'1',av:'#4A3FB0'},
+    LP:{name:'Lisa Park',            role:'Billing Specialist',          score:'58%',ss:'Needs attention',           mods:'3/8',certs:'0',av:'#B03020'},
+    MT:{name:'Marcus Thompson, PA',  role:'Emergency Medicine',          score:'42%',ss:'Below 50% — action needed', mods:'2/8',certs:'0',av:'#A05000'},
+  },
+  fin:{
+    AW:{name:'Alexandra Wong, CFP®', role:'Sr. Wealth Advisor',          score:'94%',ss:'Top 10% of team',           mods:'6/6',certs:'3',av:'#0F1F5C'},
+    MT:{name:'Marcus Torres',        role:'Registered Rep · Series 7',   score:'88%',ss:'Top 20% of team',           mods:'5/6',certs:'2',av:'#0A6B55'},
+    SP:{name:'Samantha Price',       role:'Research Analyst',            score:'82%',ss:'Most improved this month',  mods:'5/6',certs:'2',av:'#4A3FB0'},
+    JL:{name:'James Liu',            role:'Branch Compliance Officer',   score:'79%',ss:'Above average',             mods:'4/6',certs:'1',av:'#B03020'},
+    ER:{name:'Elena Reyes, CFP®',    role:'Financial Planner',           score:'76%',ss:'Above average',             mods:'4/6',certs:'1',av:'#A05000'},
+    CB:{name:'Chris Baker',          role:'Portfolio Manager',           score:'71%',ss:'On track',                  mods:'3/6',certs:'1',av:'#C89020'},
+    NK:{name:'Nadia Kaur',           role:'Client Associate',            score:'65%',ss:'Needs attention',           mods:'3/6',certs:'0',av:'#2D6B1A'},
+    DP:{name:'Daniel Park',          role:'Registered Rep · Series 66',  score:'43%',ss:'Below 50% — action needed', mods:'1/6',certs:'0',av:'#5F5E5A'},
+  },
+};
+function getStaffData(){ return ORG_STAFF_DATA[currentOrg] || ORG_STAFF_DATA['health']; }
+
+const COURSE_DATA = {
+  health:{
+    tag:'🏥 Healthcare Track', title:'AI Tools in Clinical Workflows',
+    sub:'HIPAA-aligned · Kaplan Medical Faculty · 4.5 CE hours',
+    pct:'68%', mods:'5 / 8', hrs:'4.5 hrs',
+    modules:[
+      {n:'1',t:'Introduction to AI in Healthcare Settings',m:'30 min · Reading + Quiz',s:'done'},
+      {n:'2',t:'Understanding LLMs — What Clinicians Need to Know',m:'40 min · Video + Quiz',s:'done'},
+      {n:'3',t:'Ambient AI Documentation & EHR Integration',m:'45 min · Video + Simulation',s:'done'},
+      {n:'4',t:'AI in Diagnostics — Opportunities & Risks',m:'35 min · Case Studies',s:'done'},
+      {n:'5',t:"HIPAA + AI — What's Permitted, What's Not",m:'50 min · Reading + Simulation',s:'done'},
+      {n:'6',t:'Patient Data, Consent & AI Transparency',m:'40 min · Video + Quiz',s:'current'},
+      {n:'7',t:'AI Governance in Hospital Systems',m:'35 min · Reading + Assessment',s:'locked'},
+      {n:'8',t:'Final Assessment + CE Certificate',m:'60 min · Proctored Exam',s:'locked'},
+    ]
+  },
+  fin:{
+    tag:'📈 Securities Track', title:'AI in Investment Research & Compliance',
+    sub:'FINRA-mapped · Kaplan Financial Faculty · 3 CE hours',
+    pct:'33%', mods:'2 / 6', hrs:'3 hrs',
+    modules:[
+      {n:'1',t:'AI in Financial Markets — Fundamentals',m:'30 min · Reading + Quiz',s:'done'},
+      {n:'2',t:'AI-Assisted Investment Research & Reg AC',m:'35 min · Simulation',s:'done'},
+      {n:'3',t:'Regulation Best Interest & AI Suitability',m:'40 min · Case Studies',s:'current'},
+      {n:'4',t:'AI in Trade Surveillance & FINRA Rule 3110',m:'35 min · Video + Quiz',s:'locked'},
+      {n:'5',t:'AI in Client Communications & Disclosures',m:'30 min · Simulation',s:'locked'},
+      {n:'6',t:'Final Assessment + CE Certificate',m:'50 min · Proctored Exam',s:'locked'},
+    ]
+  },
+  cfp:{
+    tag:'💼 CFP® & Wealth Track', title:'AI in Financial Planning & Fiduciary Practice',
+    sub:'CFP Board Standards · Kaplan Financial · 3 CE hours',
+    pct:'0%', mods:'0 / 6', hrs:'3 hrs',
+    modules:[
+      {n:'1',t:'AI Tools for Financial Planners — Overview',m:'30 min · Reading',s:'current'},
+      {n:'2',t:'Fiduciary Duty & AI-Assisted Recommendations',m:'40 min · Case Studies',s:'locked'},
+      {n:'3',t:'AI in Estate & Tax Planning',m:'35 min · Reading + Quiz',s:'locked'},
+      {n:'4',t:'AI in Client Discovery & Behavioral Finance',m:'30 min · Simulation',s:'locked'},
+      {n:'5',t:'CFP Board Ethics & AI Transparency',m:'35 min · Simulation',s:'locked'},
+      {n:'6',t:'Final Assessment + CE Certificate',m:'50 min · Proctored Exam',s:'locked'},
+    ]
+  },
+  ins:{
+    tag:'🛡 Insurance Track', title:'Responsible AI in Underwriting & Claims',
+    sub:'NAIC-aligned · Kaplan Financial · 2.5 CE hours',
+    pct:'10%', mods:'1 / 5', hrs:'2.5 hrs',
+    modules:[
+      {n:'1',t:'AI in the Insurance Industry — Overview',m:'25 min · Reading + Quiz',s:'current'},
+      {n:'2',t:'AI Underwriting & NAIC Model Bulletin (2023)',m:'40 min · Case Studies',s:'locked'},
+      {n:'3',t:'AI in Claims Processing & UCSPA',m:'35 min · Simulation',s:'locked'},
+      {n:'4',t:'Adverse Action Notices & FCRA Compliance',m:'30 min · Reading + Quiz',s:'locked'},
+      {n:'5',t:'Final Assessment + CE Certificate',m:'45 min · Proctored Exam',s:'locked'},
+    ]
+  },
+};
+
+// Track currently shown in course view
+let currentCourseTrack = 'health';
+
+// ═══════ SIMULATOR STATE ═══════
+const TRACK_SIM_CONFIG = {
+  health:{
+    industry:'healthcare',
+    setting:'a hospital or clinical setting',
+    focusMap:{
+      any:'any compliance area relevant to AI use in healthcare',
+      documentation:'AI-generated documentation, EHR integration, or medical record accuracy obligations',
+      disclosure:'patient disclosure obligations, transparency, or informed consent when AI is involved in care',
+      data:'HIPAA data privacy, PHI handling, or security requirements when using AI tools',
+      supervision:'supervisory obligations, physician oversight, or accountability for AI clinical outputs',
+      bias:'algorithmic bias, health equity, or disparate impact risks from AI diagnostic or triage systems',
+    },
+    focusLabels:{
+      any:'Any area',
+      documentation:'Documentation & EHR',
+      disclosure:'Patient disclosure',
+      data:'PHI & data privacy',
+      supervision:'Physician oversight',
+      bias:'Algorithmic bias',
+    },
+    styleMap:{
+      case:'a realistic case study where a specific healthcare professional is facing a compliance decision involving an AI tool in their clinical or administrative workflow',
+      policy:'a policy interpretation scenario where the healthcare professional must determine whether a specific AI use is permitted under HIPAA, CMS, or OIG requirements',
+      incident:'an incident response scenario where something has already gone wrong with an AI tool in a clinical or administrative setting and the professional must determine the correct course of action',
+    },
+    roles:['Clinical Nurse','Attending Physician','Medical Coder','Hospitalist','Emergency PA','Billing Specialist','Health IT Administrator','Chief Medical Officer'],
+    regs:['HIPAA Privacy Rule (45 CFR §164.502)','HIPAA Security Rule (45 CFR §164.312)','CMS Documentation Requirements (42 CFR §482.24)','OIG Compliance Guidelines','False Claims Act (31 U.S.C. §§3729-3733)','FDA Software as a Medical Device (SaMD) Framework'],
+    aiTools:'ambient documentation tool, AI-assisted coding software, clinical decision support AI, AI prior authorization tool, automated triage system',
+    sysIntro:'a professional AI compliance training platform for healthcare professionals',
+  },
+  fin:{
+    industry:'securities and wealth management',
+    setting:'a broker-dealer, investment advisory firm, or wealth management practice',
+    focusMap:{
+      any:'any compliance area relevant to AI use in securities and wealth management',
+      documentation:'AI-assisted research documentation, record-keeping, or written supervisory procedures',
+      disclosure:'client disclosure obligations, Reg BI best interest documentation, or transparency when AI is used in advice',
+      data:'client data privacy, confidentiality obligations, or data security when using AI tools with customer information',
+      supervision:'supervisory obligations under FINRA Rule 3110, branch manager oversight, or accountability for AI-generated recommendations',
+      bias:'algorithmic bias, fair treatment of customers, or disparate impact risks from AI-driven suitability assessments',
+    },
+    focusLabels:{
+      any:'Any area',
+      documentation:'Research documentation',
+      disclosure:'Reg BI & disclosure',
+      data:'Client data & privacy',
+      supervision:'FINRA Rule 3110',
+      bias:'Suitability & fairness',
+    },
+    styleMap:{
+      case:'a realistic case study where a specific securities professional is facing a compliance decision involving an AI tool in their advisory or research workflow',
+      policy:'a policy interpretation scenario where the securities professional must determine whether a specific AI use is permitted under FINRA, SEC, or CFP Board requirements',
+      incident:'an incident response scenario where something has already gone wrong with an AI tool in an investment advisory or research setting and the professional must determine the correct course of action',
+    },
+    roles:['Registered Representative','Investment Adviser','Research Analyst','Branch Compliance Officer','Portfolio Manager','CFP Professional','Wealth Advisor','Client Associate'],
+    regs:['SEC Regulation Best Interest (17 CFR §240.15l-1)','SEC Regulation AC (17 CFR §242.500)','FINRA Rule 3110 (Supervision)','FINRA Rule 2241 (Research Analyst Conflicts)','CFP Board Code of Ethics and Standards of Conduct','Investment Advisers Act of 1940'],
+    aiTools:'AI research synthesis tool, AI-assisted suitability screening system, AI trade surveillance platform, AI-generated client communication drafter, robo-advisory recommendation engine',
+    sysIntro:'a professional AI compliance training platform for securities and wealth management professionals',
+  },
+};
+
+// Fallback getters used in generateScenario
+function getSimConfig(){ return TRACK_SIM_CONFIG[currentOrg] || TRACK_SIM_CONFIG['health']; }
+
+let simSt = {answered:false,results:[],loadInt:null,currentQ:null};
+
+// ═══════ ONBOARDING ═══════
+function goS(id){
+  document.querySelectorAll('.obs').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+function launch(view){
+  document.getElementById('ob').classList.add('gone');
+  document.getElementById('app').classList.add('vis');
+  buildModules();
+  buildStaffModules(null);
+  applyOrg();
+  nav(view, document.querySelector('.ni'));
+}
+
+// ═══════ NAVIGATION ═══════
+function nav(id, el){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('act'));
+  document.getElementById('view-'+id).classList.add('act');
+  if(el){document.querySelectorAll('.ni').forEach(n=>n.classList.remove('act'));el.classList.add('act');}
+  document.getElementById('main').scrollTo(0,0);
+  if(id==='score'){buildRadar();buildDomainBars();buildStaffRows();}
+  if(id==='employer'||id==='news'){buildStaffTable();buildNewsFeed();buildLeaderboard();}
+  if(id==='simulator'){
+    const org=ORGS[currentOrg];
+    const tc=getSimConfig();
+    // Pills
+    const pills=document.getElementById('sim-idle-pills');
+    if(pills){
+      pills.innerHTML='';
+      org.simIdlePills.forEach(p=>{
+        pills.innerHTML+=`<span class="idle-pill" style="background:${p.bg};color:${p.color}">${p.label}</span>`;
+      });
+    }
+    // Topbar label
+    const lbl=document.getElementById('sim-track-label');
+    if(lbl) lbl.textContent=org.simTopLabel;
+    // Focus dropdown labels
+    const focusSel=document.getElementById('sim-focus');
+    if(focusSel && tc.focusLabels){
+      Array.from(focusSel.options).forEach(opt=>{
+        if(tc.focusLabels[opt.value]) opt.text=tc.focusLabels[opt.value];
+      });
+    }
+  }
+}
+
+// ═══════ STAFF ═══════
+function viewStaff(key){
+  const s = getStaffData()[key]; if(!s) return;
+  document.getElementById('sm-name').textContent = s.name;
+  document.getElementById('sm-score').textContent = s.score;
+  document.getElementById('sm-mods').textContent = s.mods;
+  document.getElementById('sm-certs').textContent = s.certs;
+  document.getElementById('staff-modal').classList.add('op');
+}
+function buildStaffModules(key){
+  const ml = document.getElementById('sv-mlist');
+  if(!ml) return;
+  const staffMap = getStaffData();
+  const defaultKey = Object.keys(staffMap)[1] || Object.keys(staffMap)[0];
+  const s = key ? (staffMap[key] || staffMap[defaultKey]) : staffMap[defaultKey];
+  document.getElementById('sv-name').textContent = s.name;
+  const trackLabel = ORGS[currentOrg].tracks.map(t=>t.label).join(' + ');
+  document.getElementById('sv-role').textContent = s.role + ' · ' + trackLabel + ' track';
+  document.getElementById('sv-score').textContent = s.score;
+  document.getElementById('sv-ss').textContent = s.ss;
+  document.getElementById('sv-mods').textContent = s.mods;
+  document.getElementById('sv-certs').textContent = s.certs;
+  ml.innerHTML='';
+  const cd = COURSE_DATA[ORGS[currentOrg].tracks[0].key] || COURSE_DATA['health'];
+  cd.modules.forEach(m=>{
+    const div=document.createElement('div');
+    div.className='mi'+(m.s==='locked'?' mlk':'');
+    const dn=m.s==='done',cu=m.s==='current';
+    div.innerHTML=`<div class="mn ${dn?'dn':cu?'cu':''}">${dn?'<i class="ti ti-check" style="font-size:11px"></i>':m.n}</div><div style="flex:1"><div class="mti">${m.t}</div><div class="mme">${m.m}</div></div><span class="mbg ${dn?'dn':cu?'cu':'lk'}">${dn?'Done':cu?'Up next':'<i class="ti ti-lock" style="font-size:10px"></i> Locked'}</span>`;
+    if(m.s!=='locked') div.onclick=()=>nav('simulator',null);
+    ml.appendChild(div);
+  });
+}
+
+// ═══════ COURSES ═══════
+function loadCourse(trackKey){
+  currentCourseTrack = trackKey || ORGS[currentOrg].tracks[0].key;
+  buildModules();
+  // Update hero
+  const cd = COURSE_DATA[currentCourseTrack];
+  if(!cd) return;
+  const htag=document.getElementById('htag'); if(htag) htag.textContent=cd.tag;
+  const ht=document.getElementById('ht'); if(ht) ht.textContent=cd.title;
+  const hs=document.getElementById('hs'); if(hs) hs.textContent=cd.sub;
+  const hpct=document.getElementById('hpct'); if(hpct) hpct.textContent=cd.pct;
+  const hmods=document.getElementById('hmods'); if(hmods) hmods.textContent=cd.mods;
+  const hhrs=document.getElementById('hhrs'); if(hhrs) hhrs.textContent=cd.hrs;
+}
+function buildModules(){
+  const ml=document.getElementById('mlist');
+  if(!ml) return;
+  const cd = COURSE_DATA[currentCourseTrack] || COURSE_DATA['health'];
+  ml.innerHTML='';
+  cd.modules.forEach(m=>{
+    const div=document.createElement('div');
+    div.className='mi'+(m.s==='locked'?' mlk':'');
+    const dn=m.s==='done',cu=m.s==='current';
+    div.innerHTML=`<div class="mn ${dn?'dn':cu?'cu':''}">${dn?'<i class="ti ti-check" style="font-size:11px"></i>':m.n}</div><div style="flex:1"><div class="mti">${m.t}</div><div class="mme">${m.m}</div></div><span class="mbg ${dn?'dn':cu?'cu':'lk'}">${dn?'Done':cu?'Up next':'<i class="ti ti-lock" style="font-size:10px"></i> Locked'}</span>`;
+    if(m.s!=='locked') div.onclick=()=>nav('simulator',null);
+    ml.appendChild(div);
+  });
+}
+
+// ═══════ LOADING STEPS ═══════
+function startLoading(){
+  [1,2,3,4].forEach(n=>{
+    const el=document.getElementById('ls'+n);
+    el.querySelector('.lstep-d').className='lstep-d';
+    el.className='lstep';
+    el.querySelector('.lstep-ck').style.display='none';
+  });
+  let cur=0;
+  simSt.loadInt=setInterval(()=>{
+    if(cur>0){
+      const prev=document.getElementById('ls'+cur);
+      prev.querySelector('.lstep-d').className='lstep-d done';
+      prev.className='lstep done';
+      prev.querySelector('.lstep-ck').style.display='block';
+    }
+    cur++;
+    if(cur<=4){
+      const el=document.getElementById('ls'+cur);
+      el.querySelector('.lstep-d').className='lstep-d active';
+      el.className='lstep active';
+    } else { clearInterval(simSt.loadInt); }
+  }, 650);
+}
+function stopLoading(){
+  clearInterval(simSt.loadInt);
+  [1,2,3,4].forEach(n=>{
+    const el=document.getElementById('ls'+n);
+    el.querySelector('.lstep-d').className='lstep-d done';
+    el.className='lstep done';
+    el.querySelector('.lstep-ck').style.display='block';
+  });
+}
+
+// ═══════ SHOW/HIDE STATES ═══════
+function showState(state){
+  document.getElementById('sim-idle').style.display = state==='idle'?'flex':'none';
+  document.getElementById('sim-loading').className = 'sim-loading'+(state==='loading'?' show':'');
+  document.getElementById('sim-qwrap').className = 'sim-qwrap'+(state==='question'?' show':'');
+  document.getElementById('sim-results').className = 'sim-results'+(state==='results'?' show':'');
+}
+
+// ═══════ GENERATE ═══════
+async function generateScenario(){
+  const diff = document.getElementById('sim-diff').value;
+  const focus = document.getElementById('sim-focus').value;
+  const style = document.getElementById('sim-style').value;
+  const tc = getSimConfig();
+  const role = tc.roles[Math.floor(Math.random()*tc.roles.length)];
+  const reg = tc.regs[Math.floor(Math.random()*tc.regs.length)];
+  const correctIdx = Math.floor(Math.random()*4);
+
+  simSt.answered = false;
+  document.getElementById('sim-error').className = 'sim-error';
+  document.getElementById('gen-btn').disabled = true;
+  document.getElementById('next-btn').style.display = 'none';
+  showState('loading');
+  startLoading();
+
+  const prompt = `You are a compliance training expert creating a scenario for Kaplan AI Ready, ${tc.sysIntro}.
+
+Generate a ${diff} compliance scenario for a ${role} in ${tc.setting}.
+
+Requirements:
+- Style: ${tc.styleMap[style] || tc.styleMap['case']}
+- Focus: ${tc.focusMap[focus] || tc.focusMap['any']}
+- The scenario MUST specifically involve an AI tool being used (or misused) — name a specific type of AI tool relevant to this industry (e.g., ${tc.aiTools})
+- Ground the scenario in real regulatory requirements — anchor primarily to: ${reg}
+- The scenario should feel authentic — specific job title, specific AI tool type, specific ${tc.industry} workflow
+- The wrong choices should each seem genuinely plausible on first reading — avoid obviously wrong answers
+
+Return ONLY a valid JSON object, no markdown, no explanation:
+{
+  "role": "concise role label e.g. 'Healthcare · HIPAA & Documentation'",
+  "scenario_label": "3-5 word scenario title",
+  "scenario": "2-3 sentences. Be specific — name the AI tool type, the workflow, the compliance tension. No more than 60 words.",
+  "regulation": "Primary regulation at stake e.g. 'HIPAA Privacy Rule · 45 CFR §164.502'",
+  "question": "A specific compliance question this professional must answer. Start with What, Which, or Under.",
+  "choices": ["Choice A", "Choice B", "Choice C", "Choice D"],
+  "correct_index": ${correctIdx},
+  "feedback_correct": "2-3 sentences explaining why correct, citing the specific regulatory obligation.",
+  "feedback_wrong": "2-3 sentences explaining the correct answer and what regulatory requirement it satisfies.",
+  "citation": "Specific regulatory citation(s)"
+}
+
+The correct answer MUST be at index ${correctIdx}. Arrange the choices so the correct answer is at position ${correctIdx} and the others are plausible wrong answers.`;
+
+  try {
+    const res = await fetch('/api/claude', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        messages:[{role:'user',content:prompt}]
+      })
+    });
+    if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||`API ${res.status}`);}
+    const data = await res.json();
+    const text = data.content.map(b=>b.text||'').join('').trim().replace(/```json|```/g,'').trim();
+    const q = JSON.parse(text);
+    stopLoading();
+    await new Promise(r=>setTimeout(r,300));
+    renderQuestion(q);
+    simSt.currentQ = q;
+
+    // Show results after 3 answered
+    if(simSt.results.length>=3) { showResults(); return; }
+  } catch(err){
+    stopLoading();
+    showState('idle');
+    const errEl = document.getElementById('sim-error');
+    document.getElementById('sim-error-msg').textContent = err.message||'Could not generate scenario. Please try again.';
+    errEl.className = 'sim-error show';
+    setTimeout(()=>errEl.className='sim-error',5000);
+  } finally {
+    document.getElementById('gen-btn').disabled = false;
+  }
+}
+
+// ═══════ RENDER QUESTION ═══════
+function renderQuestion(q){
+  document.getElementById('ai-role').textContent = q.role;
+  document.getElementById('ai-label').textContent = q.scenario_label;
+  document.getElementById('ai-scenario').textContent = q.scenario;
+  document.getElementById('ai-reg').textContent = q.regulation;
+  document.getElementById('qtext').textContent = q.question;
+  document.getElementById('qctr').textContent = 'Question '+(simSt.results.length+1);
+
+  // Pips
+  const pips = document.getElementById('pips');
+  pips.innerHTML='';
+  for(let i=0;i<3;i++){
+    const p=document.createElement('div');
+    p.className='pip'+(i<simSt.results.length?' '+(simSt.results[i]?'ok':'bd'):i===simSt.results.length?' cu':'');
+    pips.appendChild(p);
+  }
+
+  // Choices
+  const ch = document.getElementById('choices');
+  ch.innerHTML='';
+  ['A','B','C','D'].forEach((l,i)=>{
+    const div=document.createElement('div');
+    div.className='choice';
+    div.innerHTML=`<div class="ch-letter">${l}</div><div style="flex:1;line-height:1.5">${q.choices[i]}</div>`;
+    div.onclick=()=>pickAnswer(i,div,q);
+    ch.appendChild(div);
+  });
+
+  document.getElementById('fb').className='fb';
+  document.getElementById('sim-hint').textContent='Select the best answer';
+  document.getElementById('next-btn').style.display='none';
+  simSt.answered=false;
+  showState('question');
+  updateScore();
+}
+
+// ═══════ PICK ANSWER ═══════
+function pickAnswer(i,el,q){
+  if(simSt.answered)return;
+  simSt.answered=true;
+  const ok=i===q.correct_index;
+  simSt.results.push(ok);
+
+  document.querySelectorAll('.choice').forEach((c,idx)=>{
+    c.classList.add('clk');
+    if(idx===q.correct_index) c.classList.add(ok&&idx===i?'ok':'msd');
+    else if(idx===i&&!ok) c.classList.add('bad');
+  });
+
+  const fb=document.getElementById('fb');
+  fb.className='fb show '+(ok?'ok':'bad');
+  document.getElementById('fbh').innerHTML=ok
+    ?'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:5px;vertical-align:middle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Correct'
+    :'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:5px;vertical-align:middle"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Not quite';
+  document.getElementById('fbb').textContent=ok?q.feedback_correct:q.feedback_wrong;
+  document.getElementById('fbc').textContent='Regulatory basis: '+q.citation;
+
+  document.getElementById('sim-hint').textContent=ok?'Well done!':'Review the explanation above.';
+  document.getElementById('next-btn').style.display='inline-flex';
+  updateScore();
+
+  if(simSt.results.length>=3){
+    document.getElementById('next-btn').textContent='See results →';
+    document.getElementById('next-btn').onclick=showResults;
+  }
+}
+
+function updateScore(){
+  const c=simSt.results.filter(Boolean).length;
+  document.getElementById('sim-score').textContent=c+' / '+simSt.results.length;
+}
+
+function showResults(){
+  const c=simSt.results.filter(Boolean).length,t=simSt.results.length,p=Math.round(c/t*100);
+  document.getElementById('rval').textContent=c+'/'+t;
+  document.getElementById('rlbl').textContent='Session complete · '+(p>=80?'Excellent work!':p>=60?'Good effort — review the explanations.':'Keep practicing — each scenario builds your regulatory knowledge.');
+  document.getElementById('rc').textContent=c;
+  document.getElementById('rw').textContent=t-c;
+  document.getElementById('rp').textContent=p+'%';
+  showState('results');
+}
+
+function resetSession(){
+  simSt={answered:false,results:[],loadInt:null,currentQ:null};
+  updateScore();
+  showState('idle');
+}
+
+// ═══════ AI READINESS SCORE ═══════
+const DOMAINS = [
+  {key:'hipaa',   label:'HIPAA Privacy',    full:'HIPAA Privacy & PHI Handling',  team:88, color:'#0A6B55'},
+  {key:'cms',     label:'CMS Docs',         full:'CMS Documentation Standards',   team:79, color:'#0F1F5C'},
+  {key:'oig',     label:'OIG Billing',      full:'OIG Billing & Coding Compliance',team:71, color:'#4A3FB0'},
+  {key:'aitools', label:'AI Tools',         full:'AI Tool Usage & Oversight',      team:74, color:'#A05000'},
+  {key:'gov',     label:'AI Governance',    full:'AI Governance & Policy',         team:58, color:'#B03020'},
+];
+
+const STAFF_SCORES = [
+  {key:'SR', name:'Sarah Rodriguez, MD',  role:'Hospitalist',         av:'#0A6B55', scores:[95,92,88,91,88], overall:91},
+  {key:'JM', name:'Jordan Mitchell, RN',  role:'Emergency Nursing',   av:'#0F1F5C', scores:[90,85,78,82,72], overall:82},
+  {key:'DK', name:'David Kim',            role:'Medical Coder',       av:'#4A3FB0', scores:[82,78,80,62,55], overall:67},
+  {key:'LP', name:'Lisa Park',            role:'Billing Specialist',  av:'#B03020', scores:[78,65,72,52,44], overall:58},
+  {key:'MT', name:'Marcus Thompson, PA',  role:'Emergency Medicine',  av:'#A05000', scores:[68,55,38,44,29], overall:42},
+];
+
+function buildRadar(){
+  const svg = document.getElementById('radar-svg');
+  if(!svg) return;
+  const cx=160, cy=148, R=100;
+  const n = DOMAINS.length;
+  const angles = DOMAINS.map((_,i)=> -Math.PI/2 + (2*Math.PI*i)/n);
+
+  // Grid rings
+  const grid = document.getElementById('radar-grid');
+  grid.innerHTML='';
+  [20,40,60,80,100].forEach(pct=>{
+    const r = R * pct/100;
+    const pts = angles.map(a=>`${cx+r*Math.cos(a)},${cy+r*Math.sin(a)}`).join(' ');
+    const poly = document.createElementNS('http://www.w3.org/2000/svg','polygon');
+    poly.setAttribute('points',pts);
+    poly.setAttribute('fill','none');
+    poly.setAttribute('stroke','#DDD9CF');
+    poly.setAttribute('stroke-width','1');
+    grid.appendChild(poly);
+    // pct label
+    const lbl = document.createElementNS('http://www.w3.org/2000/svg','text');
+    lbl.setAttribute('x', cx+4);
+    lbl.setAttribute('y', cy-r+4);
+    lbl.setAttribute('font-size','8');
+    lbl.setAttribute('fill','#A8ADBE');
+    lbl.textContent = pct+'%';
+    grid.appendChild(lbl);
+  });
+
+  // Axes
+  const axes = document.getElementById('radar-axes');
+  axes.innerHTML='';
+  angles.forEach(a=>{
+    const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1',cx); line.setAttribute('y1',cy);
+    line.setAttribute('x2',cx+R*Math.cos(a)); line.setAttribute('y2',cy+R*Math.sin(a));
+    line.setAttribute('stroke','#DDD9CF'); line.setAttribute('stroke-width','1');
+    axes.appendChild(line);
+  });
+
+  // Team polygon
+  const teamPts = DOMAINS.map((d,i)=>{
+    const r = R * d.team/100;
+    return `${cx+r*Math.cos(angles[i])},${cy+r*Math.sin(angles[i])}`;
+  }).join(' ');
+  document.getElementById('radar-team').setAttribute('points',teamPts);
+
+  // Dot markers
+  const dots = document.getElementById('radar-dots');
+  dots.innerHTML='';
+  DOMAINS.forEach((d,i)=>{
+    const r = R * d.team/100;
+    const x = cx+r*Math.cos(angles[i]);
+    const y = cy+r*Math.sin(angles[i]);
+    const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx',x); c.setAttribute('cy',y); c.setAttribute('r','4');
+    c.setAttribute('fill','var(--navy)'); c.setAttribute('stroke','#fff'); c.setAttribute('stroke-width','1.5');
+    dots.appendChild(c);
+  });
+
+  // Labels
+  const labels = document.getElementById('radar-labels');
+  labels.innerHTML='';
+  DOMAINS.forEach((d,i)=>{
+    const LABEL_R = R+26;
+    const x = cx+LABEL_R*Math.cos(angles[i]);
+    const y = cy+LABEL_R*Math.sin(angles[i]);
+    const anchor = Math.cos(angles[i]) > 0.1 ? 'start' : Math.cos(angles[i]) < -0.1 ? 'end' : 'middle';
+
+    const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+
+    const lbl = document.createElementNS('http://www.w3.org/2000/svg','text');
+    lbl.setAttribute('x',x); lbl.setAttribute('y',y);
+    lbl.setAttribute('font-size','10'); lbl.setAttribute('font-weight','600');
+    lbl.setAttribute('fill','#2E3140'); lbl.setAttribute('text-anchor',anchor);
+    lbl.textContent = d.label;
+    g.appendChild(lbl);
+
+    const score = document.createElementNS('http://www.w3.org/2000/svg','text');
+    score.setAttribute('x',x); score.setAttribute('y',y+13);
+    score.setAttribute('font-size','9'); score.setAttribute('fill','#6B7087');
+    score.setAttribute('text-anchor',anchor);
+    score.textContent = d.team+'%';
+    g.appendChild(score);
+
+    labels.appendChild(g);
+  });
+}
+
+function buildDomainBars(){
+  const container = document.getElementById('domain-bars');
+  if(!container) return;
+  container.innerHTML='';
+  DOMAINS.forEach(d=>{
+    const color = d.team >= 80 ? 'var(--green)' : d.team >= 65 ? 'var(--navy)' : 'var(--amber)';
+    const bgColor = d.team >= 80 ? 'var(--gl)' : d.team >= 65 ? 'var(--nl)' : 'var(--al)';
+    const div = document.createElement('div');
+    div.innerHTML = `
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">
+        <div style="font-size:12px;font-weight:500;color:var(--ink)">${d.full}</div>
+        <div style="font-size:13px;font-weight:600;color:${color};background:${bgColor};padding:1px 8px;border-radius:4px">${d.team}%</div>
+      </div>
+      <div style="height:6px;background:var(--s3);border-radius:3px;overflow:hidden">
+        <div style="height:100%;width:0%;background:${color};border-radius:3px;transition:width 1s var(--ease)" data-width="${d.team}%"></div>
+      </div>`;
+    container.appendChild(div);
+  });
+  // Animate bars after a tick
+  setTimeout(()=>{
+    container.querySelectorAll('[data-width]').forEach(el=>{
+      el.style.width = el.getAttribute('data-width');
+    });
+  }, 80);
+}
+
+function buildStaffRows(){
+  const container = document.getElementById('staff-score-rows');
+  if(!container) return;
+  container.innerHTML='';
+  STAFF_SCORES.forEach(s=>{
+    const chipClass = s.overall >= 80 ? 'sh' : s.overall >= 60 ? 'sm2' : 'sl';
+    const row = document.createElement('div');
+    row.style.cssText = 'display:grid;grid-template-columns:1fr 60px 60px 60px 60px 60px 80px;padding:.7rem 1rem;border-bottom:1px solid var(--border);align-items:center;cursor:pointer;transition:background .15s';
+    row.onmouseover=()=>row.style.background='var(--canvas)';
+    row.onmouseout=()=>row.style.background='';
+    row.onclick=()=>viewStaff(s.key);
+
+    const domainCells = s.scores.map(sc=>{
+      const col = sc>=80?'var(--green)':sc>=65?'var(--navy)':'var(--amber)';
+      return `<div style="text-align:center;font-size:12px;font-weight:600;color:${col}">${sc}%</div>`;
+    }).join('');
+
+    row.innerHTML = `
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="width:27px;height:27px;border-radius:50%;background:${s.av};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff;flex-shrink:0">${s.key}</div>
+        <div><div style="font-size:13px;font-weight:500">${s.name}</div><div style="font-size:11px;color:var(--ink4)">${s.role}</div></div>
+      </div>
+      ${domainCells}
+      <div style="text-align:center"><span class="sch ${chipClass}">${s.overall}%</span></div>`;
+    container.appendChild(row);
+  });
+}
+
+// ═══════ LEADERBOARD ═══════
+const LEADERBOARD_META = {
+  health:{
+    leaders:[
+      {key:'SR',name:'Sarah Rodriguez, MD',role:'Hospitalist · ICU',       av:'#0A6B55',score:91,delta:'+5',streak:12,certs:2,improvement:false},
+      {key:'JM',name:'Jordan Mitchell, RN', role:'Emergency Nursing',        av:'#0F1F5C',score:82,delta:'+3',streak:7, certs:1,improvement:false},
+      {key:'DK',name:'David Kim',           role:'Medical Coder',            av:'#4A3FB0',score:67,delta:'+9',streak:5, certs:1,improvement:true},
+    ],
+    medals:['🥇','🥈','🥉'],
+    rankColors:['var(--gold)','#9CA3AF','#C47B3A'],
+    barColors:['var(--green)','var(--navy)','var(--purple)'],
+  },
+  fin:{
+    leaders:[
+      {key:'AW',name:'Alexandra Wong, CFP®',role:'Sr. Wealth Advisor',      av:'#0F1F5C',score:94,delta:'+4',streak:18,certs:3,improvement:false},
+      {key:'MT',name:'Marcus Torres',       role:'Registered Rep · Series 7',av:'#0A6B55',score:88,delta:'+6',streak:11,certs:2,improvement:false},
+      {key:'SP',name:'Samantha Price',      role:'Research Analyst',         av:'#4A3FB0',score:82,delta:'+11',streak:8,certs:2,improvement:true},
+    ],
+    medals:['🥇','🥈','🥉'],
+    rankColors:['var(--gold)','#9CA3AF','#C47B3A'],
+    barColors:['var(--green)','var(--navy)','var(--purple)'],
+  },
+};
+
+function buildLeaderboard(){
+  const el = document.getElementById('leaderboard-row');
+  if(!el) return;
+  const meta = LEADERBOARD_META[currentOrg] || LEADERBOARD_META['health'];
+  const shdr = document.querySelector('#view-employer .shdr h3');
+
+  el.innerHTML='';
+  meta.leaders.forEach((p,i)=>{
+    const rankClass = `rank-${i+1}`;
+    const barColor = meta.barColors[i];
+    const deltaColor = p.delta.startsWith('+')?'var(--green)':'var(--coral)';
+    const deltaBg = p.delta.startsWith('+')?'var(--gl)':'var(--cl)';
+    const improveBadge = p.improvement
+      ? `<span style="font-size:10px;font-weight:600;background:var(--al);color:var(--amber2);padding:2px 7px;border-radius:4px;border:1px solid #E8C280">⬆ Most Improved</span>`
+      : '';
+
+    const div = document.createElement('div');
+    div.className = `lb-card ${rankClass}`;
+    div.onclick = () => viewStaff(p.key);
+    div.innerHTML = `
+      <div class="lb-rank">${i+1}</div>
+      <div class="lb-medal">${meta.medals[i]}</div>
+      <div class="lb-name">${p.name}</div>
+      <div class="lb-role">${p.role}</div>
+      <div class="lb-score-row">
+        <div class="lb-score" style="color:${barColor}">${p.score}%</div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+          <span class="lb-delta" style="color:${deltaColor};background:${deltaBg}">${p.delta} this month</span>
+          ${improveBadge}
+        </div>
+      </div>
+      <div class="lb-bar"><div class="lb-bar-fill" style="width:0%;background:${barColor}" data-w="${p.score}%"></div></div>
+      <div class="lb-meta">
+        <span class="lb-streak"><i class="ti ti-flame" style="font-size:12px"></i>${p.streak}-day streak</span>
+        <span style="margin-left:auto"><i class="ti ti-certificate" style="font-size:12px;margin-right:3px"></i>${p.certs} cert${p.certs!==1?'s':''}</span>
+      </div>`;
+    el.appendChild(div);
+  });
+
+  // Animate bars after paint
+  requestAnimationFrame(()=>{
+    setTimeout(()=>{
+      el.querySelectorAll('[data-w]').forEach(bar=>{
+        bar.style.width = bar.getAttribute('data-w');
+      });
+    }, 80);
+  });
+}
+
+// ═══════ COMPLIANCE GAP REPORT ═══════
+function openGapReport(){
+  const org = ORGS[currentOrg];
+  const domains = org.domains || DOMAINS;
+  const staffScores = org.staffScores || STAFF_SCORES;
+  const insights = org.scoreInsights || [];
+  const today = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  const atRisk = staffScores.filter(s=>s.overall<50).length;
+  const weakest = [...domains].sort((a,b)=>a.team-b.team)[0];
+  const strongest = [...domains].sort((a,b)=>b.team-a.team)[0];
+  const trackNames = org.tracks.map(t=>t.label).join(' + ');
+
+  const radarSVG = buildReportRadar(domains);
+
+  const domainHeaders = domains.map(d=>`<th style="text-align:center;font-size:10px;font-weight:600;color:#6B7087;text-transform:uppercase;letter-spacing:.04em;padding:6px 8px">${d.label}</th>`).join('');
+  const staffRows = staffScores.map(s=>{
+    const ov=s.overall, color=ov>=80?'#2D6B1A':ov>=60?'#0F1F5C':'#B03020', bg=ov>=80?'#E5F2DF':ov>=60?'#E8EBF5':'#F9EAE7';
+    const dCells=s.scores.map(sc=>{const c=sc>=80?'#2D6B1A':sc>=65?'#0F1F5C':'#B03020';return `<td style="text-align:center;font-size:11px;font-weight:600;color:${c};padding:6px 8px">${sc}%</td>`;}).join('');
+    return `<tr style="border-bottom:1px solid #E8E6DE"><td style="padding:8px 10px;font-size:12px;font-weight:500">${s.name}${ov<50?' ⚠':''}</td><td style="padding:8px 10px;font-size:11px;color:#6B7087">${s.role}</td>${dCells}<td style="text-align:center;padding:6px 8px"><span style="font-size:11px;font-weight:700;padding:2px 8px;border-radius:4px;background:${bg};color:${color}">${ov}%</span></td></tr>`;
+  }).join('');
+
+  const domainBars = domains.map(d=>{
+    const color=d.team>=80?'#2D6B1A':d.team>=65?'#0F1F5C':'#B03020', bg=d.team>=80?'#E5F2DF':d.team>=65?'#E8EBF5':'#F9EAE7';
+    return `<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><div style="font-size:12px;font-weight:500;color:#0D0F18">${d.full}</div><div style="font-size:12px;font-weight:700;color:${color};background:${bg};padding:2px 8px;border-radius:4px">${d.team}%</div></div><div style="height:6px;background:#F5F4EF;border-radius:3px;overflow:hidden"><div style="height:100%;width:${d.team}%;background:${color};border-radius:3px"></div></div></div>`;
+  }).join('');
+
+  const riskBlock = atRisk>0 ? `<div style="display:flex;gap:12px;padding:1rem;background:#F9EAE7;border-radius:8px;border-left:3px solid #B03020"><div style="font-size:18px;flex-shrink:0">👤</div><div><div style="font-size:13px;font-weight:600;color:#B03020;margin-bottom:3px">Individual Intervention — ${atRisk} staff below threshold</div><div style="font-size:12px;color:#2E3140">Staff scoring below 50% should be assigned mandatory remedial training and re-assessed within 30 days. Consider restricting access to AI tools until minimum readiness threshold is achieved.</div></div></div>` : '';
+
+  const html = `<div style="font-family:'DM Sans',sans-serif;color:#0D0F18;font-size:13px;line-height:1.5;background:#fff">
+  <div style="background:linear-gradient(135deg,#0F1F5C,#0A1640);padding:2rem 2.5rem;color:#fff">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.25rem">
+      <div><div style="font-size:11px;opacity:.55;letter-spacing:.08em;text-transform:uppercase;font-weight:600;margin-bottom:6px">Kaplan AI Ready</div><div style="font-size:24px;font-weight:600;margin-bottom:4px;line-height:1.2">AI Compliance Gap Report</div><div style="font-size:13px;opacity:.65">${org.name} · ${trackNames} Track</div></div>
+      <div style="text-align:right;font-size:11px;opacity:.55"><div>Generated: ${today}</div><div style="margin-top:3px">Administrator: ${org.admin}</div><div style="margin-top:3px;font-size:10px;font-style:italic">Educational purposes only — not legal advice</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;background:rgba(255,255,255,.08);border-radius:10px;padding:1.1rem 1.25rem">
+      <div><div style="font-size:28px;font-weight:700;line-height:1">${org.teamScore}</div><div style="font-size:11px;opacity:.6;margin-top:3px">Team AI Readiness</div></div>
+      <div><div style="font-size:28px;font-weight:700;line-height:1">${staffScores.length}</div><div style="font-size:11px;opacity:.6;margin-top:3px">Staff Assessed</div></div>
+      <div><div style="font-size:28px;font-weight:700;line-height:1;color:${atRisk>0?'#FCA5A5':'#86EFAC'}">${atRisk}</div><div style="font-size:11px;opacity:.6;margin-top:3px">Below 50% Threshold</div></div>
+      <div><div style="font-size:28px;font-weight:700;line-height:1;color:#FCA5A5">${weakest.team}%</div><div style="font-size:11px;opacity:.6;margin-top:3px">Weakest Domain</div></div>
+    </div>
+  </div>
+  <div style="padding:2rem 2.5rem">
+    <div style="margin-bottom:1.75rem;padding:1.1rem 1.25rem;background:#F5F4EF;border-radius:10px;border-left:4px solid #0F1F5C">
+      <div style="font-size:11px;font-weight:700;color:#0F1F5C;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem">Executive Summary</div>
+      <div style="font-size:13px;color:#2E3140;line-height:1.65">${org.name} staff achieved an overall AI Readiness Score of <strong>${org.teamScore}</strong> across the ${trackNames} compliance track. The team's strongest regulatory domain is <strong>${strongest.label} (${strongest.team}%)</strong>, while <strong>${weakest.label} (${weakest.team}%)</strong> represents the most significant compliance gap requiring immediate attention. ${atRisk>0?`<strong style="color:#B03020">${atRisk} staff member${atRisk>1?'s are':' is'} below the 50% minimum readiness threshold</strong> and require priority intervention.`:'All staff are above the 50% minimum readiness threshold.'}</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.75rem">
+      <div><div style="font-size:12px;font-weight:700;color:#0D0F18;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.85rem">Regulatory Domain Radar</div>${radarSVG}</div>
+      <div><div style="font-size:12px;font-weight:700;color:#0D0F18;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.85rem">Score by Domain</div>${domainBars}</div>
+    </div>
+    <div style="margin-bottom:1.75rem">
+      <div style="font-size:12px;font-weight:700;color:#0D0F18;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.85rem">Individual AI Readiness Breakdown</div>
+      <table style="width:100%;border-collapse:collapse;border:1px solid #DDD9CF;border-radius:8px;overflow:hidden;font-size:12px">
+        <thead><tr style="background:#F5F4EF;border-bottom:2px solid #DDD9CF"><th style="text-align:left;padding:8px 10px;font-size:11px;font-weight:600;color:#6B7087;text-transform:uppercase;letter-spacing:.04em">Name</th><th style="text-align:left;padding:8px 10px;font-size:11px;font-weight:600;color:#6B7087;text-transform:uppercase;letter-spacing:.04em">Role</th>${domainHeaders}<th style="text-align:center;padding:8px 10px;font-size:11px;font-weight:600;color:#6B7087;text-transform:uppercase;letter-spacing:.04em">Overall</th></tr></thead>
+        <tbody>${staffRows}</tbody>
+      </table>
+      <div style="font-size:10px;color:#A8ADBE;margin-top:6px">⚠ = Below 50% minimum readiness threshold — priority intervention recommended</div>
+    </div>
+    <div style="margin-bottom:1.75rem">
+      <div style="font-size:12px;font-weight:700;color:#0D0F18;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.85rem">Priority Recommendations</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;gap:12px;padding:1rem;background:#F9EAE7;border-radius:8px;border-left:3px solid #B03020"><div style="font-size:18px;flex-shrink:0">⚠</div><div><div style="font-size:13px;font-weight:600;color:#B03020;margin-bottom:3px">Immediate — ${weakest.full}</div><div style="font-size:12px;color:#2E3140">Team average is ${weakest.team}% — the lowest-scoring regulatory domain. ${insights[1]?.body||'Assign targeted training to address this gap.'}</div></div></div>
+        <div style="display:flex;gap:12px;padding:1rem;background:#FBF0E2;border-radius:8px;border-left:3px solid #A05000"><div style="font-size:18px;flex-shrink:0">📋</div><div><div style="font-size:13px;font-weight:600;color:#A05000;margin-bottom:3px">Short-term — ${insights[2]?.val||'Complete current track'}</div><div style="font-size:12px;color:#2E3140">${insights[2]?.body||'Continue assigned training modules to raise overall team readiness.'}</div></div></div>
+        ${riskBlock}
+      </div>
+    </div>
+    <div style="border-top:1px solid #DDD9CF;padding-top:1rem;display:flex;align-items:center;justify-content:space-between">
+      <div style="font-size:11px;color:#A8ADBE"><div style="font-weight:600;color:#6B7087;margin-bottom:2px">Kaplan AI Ready — ${trackNames} Track</div><div>This report is for educational and compliance planning purposes only. It does not constitute legal advice.</div><div>© ${new Date().getFullYear()} Graham Holdings Co / Kaplan · Confidential — Internal Use Only</div></div>
+      <div style="text-align:right;font-size:11px;color:#A8ADBE"><div>Report ID: KAR-${currentOrg.toUpperCase()}-${Date.now().toString(36).toUpperCase().slice(-6)}</div><div style="margin-top:2px">${today}</div></div>
+    </div>
+  </div></div>`;
+
+  document.getElementById('gap-report-content').innerHTML = html;
+  document.getElementById('gap-report-modal').classList.add('op');
+}
+
+function buildReportRadar(domains){
+  const cx=160,cy=140,R=90,n=domains.length;
+  const angles=domains.map((_,i)=>-Math.PI/2+(2*Math.PI*i)/n);
+  let grid='',axes='',poly='',dots='',labels='';
+  [20,40,60,80,100].forEach(pct=>{
+    const r=R*pct/100,pts=angles.map(a=>`${cx+r*Math.cos(a)},${cy+r*Math.sin(a)}`).join(' ');
+    grid+=`<polygon points="${pts}" fill="none" stroke="#DDD9CF" stroke-width="1" opacity="0.5"/>`;
+    grid+=`<text x="${cx+3}" y="${cy-r+4}" font-size="7" fill="#A8ADBE">${pct}%</text>`;
+  });
+  angles.forEach(a=>{axes+=`<line x1="${cx}" y1="${cy}" x2="${cx+R*Math.cos(a)}" y2="${cy+R*Math.sin(a)}" stroke="#DDD9CF" stroke-width="1"/>`;});
+  const tPts=domains.map((d,i)=>{const r=R*d.team/100;return `${cx+r*Math.cos(angles[i])},${cy+r*Math.sin(angles[i])}`;}).join(' ');
+  poly=`<polygon points="${tPts}" fill="#0F1F5C" fill-opacity="0.18" stroke="#0F1F5C" stroke-width="2" stroke-linejoin="round"/>`;
+  domains.forEach((d,i)=>{
+    const r=R*d.team/100,LR=R+24;
+    const x=cx+r*Math.cos(angles[i]),y=cy+r*Math.sin(angles[i]);
+    dots+=`<circle cx="${x}" cy="${y}" r="4" fill="#0F1F5C" stroke="#fff" stroke-width="1.5"/>`;
+    const lx=cx+LR*Math.cos(angles[i]),ly=cy+LR*Math.sin(angles[i]);
+    const anchor=Math.cos(angles[i])>0.1?'start':Math.cos(angles[i])<-0.1?'end':'middle';
+    labels+=`<text x="${lx}" y="${ly}" font-size="9" font-weight="600" fill="#2E3140" text-anchor="${anchor}">${d.label}</text>`;
+    labels+=`<text x="${lx}" y="${ly+12}" font-size="8" fill="#6B7087" text-anchor="${anchor}">${d.team}%</text>`;
+  });
+  return `<svg viewBox="0 0 320 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:'DM Sans',sans-serif">${grid}${axes}${poly}${dots}${labels}</svg>`;
+}
+
+function printGapReport(){
+  const content = document.getElementById('gap-report-content').innerHTML;
+  const win = window.open('','_blank','width=820,height=1100');
+  win.document.write(`<!DOCTYPE html><html><head><title>AI Compliance Gap Report</title><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"><style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:'DM Sans',sans-serif;background:#fff;color:#0D0F18}@page{size:A4;margin:0}@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact}}</style></head><body>${content}<script>setTimeout(()=>{window.print();},800);<\/script></body></html>`);
+  win.document.close();
+}
+
+// ═══════ REGULATORY NEWS ═══════
+const NEWS = [
+  {
+    id:1, unread:true,
+    tag:'HHS Guidance', tagColor:'#al', tagText:'#amber2',
+    icon:'📋', iconBg:'var(--al)',
+    headline:'HHS issues updated guidance on AI in clinical documentation',
+    body:'The Department of Health and Human Services released new FAQ guidance clarifying when AI-generated clinical notes require physician attestation under CMS documentation standards. The guidance specifically addresses ambient AI tools and their relationship to medical record accuracy requirements.',
+    detail:'The guidance confirms that physicians must review and personally attest to AI-generated documentation before it becomes part of the official medical record. It also clarifies that "signing without reading" AI-generated notes may constitute a CMS documentation violation, regardless of the tool vendor\'s attestation claims. Healthcare organizations should update their AI documentation policies and training accordingly.',
+    source:'HHS / CMS', date:'May 14, 2026', impact:'high', impactLabel:'High Impact',
+    action:'Review Module 3', actionNav:'courses',
+    reg:'CMS Documentation Requirements · 42 CFR §482.24'
+  },
+  {
+    id:2, unread:true,
+    tag:'HIPAA Update', tagColor:'var(--tl)', tagText:'var(--teal2)',
+    icon:'🔒', iconBg:'var(--tl)',
+    headline:'OCR clarifies BAA requirements for AI tool vendors',
+    body:'The HHS Office for Civil Rights issued guidance clarifying that all AI vendors processing protected health information on behalf of a covered entity must execute a Business Associate Agreement — including vendors whose tools process PHI incidentally or as part of model training.',
+    detail:'This guidance is particularly relevant for ambient AI documentation tools, AI-assisted coding software, and clinical decision support systems that may retain de-identified or aggregated patient data. The OCR confirmed that "de-identification" claims from AI vendors do not exempt them from BAA requirements if there is a reasonable basis to believe re-identification is possible. Covered entities should audit all current AI vendor agreements.',
+    source:'HHS OCR', date:'May 8, 2026', impact:'high', impactLabel:'High Impact',
+    action:'Review BAA checklist', actionNav:'expert',
+    reg:'HIPAA Privacy Rule · 45 CFR §164.308(b)'
+  },
+  {
+    id:3, unread:true,
+    tag:'FDA', tagColor:'var(--pl)', tagText:'var(--purple)',
+    icon:'⚕', iconBg:'var(--pl)',
+    headline:'FDA finalizes updated SaMD framework for AI clinical decision support',
+    body:'The FDA finalized its updated Software as a Medical Device framework, clarifying which AI-powered clinical decision support tools require 510(k) clearance versus those that qualify as non-device CDS under the 21st Century Cures Act.',
+    detail:'Under the finalized framework, AI tools that display information but rely on clinician judgment to act do not require FDA clearance. However, tools that directly drive clinical action — such as AI systems that automatically order tests, adjust medication dosages, or flag diagnoses without requiring clinician interpretation — are subject to premarket review. Hospitals should audit their AI clinical tool inventory against these criteria.',
+    source:'FDA', date:'Apr 29, 2026', impact:'med', impactLabel:'Action Needed',
+    action:'Ask the Expert', actionNav:'expert',
+    reg:'FDA SaMD Framework · 21st Century Cures Act §3060'
+  },
+  {
+    id:4, unread:true,
+    tag:'OIG Alert', tagColor:'var(--cl)', tagText:'var(--coral)',
+    icon:'⚠️', iconBg:'var(--cl)',
+    headline:'OIG adds AI-assisted upcoding to 2026 Work Plan priorities',
+    body:'The HHS Office of Inspector General announced that AI-assisted medical coding and billing compliance has been added to its 2026 Work Plan, with a focus on whether AI coding tools are contributing to systematic upcoding of evaluation and management services.',
+    detail:'The OIG will review claims where AI-generated E&M level suggestions exceed the documented complexity of the clinical encounter. Healthcare organizations using AI coding tools should implement human review checkpoints and maintain audit trails showing that coders verified — rather than accepted — AI coding suggestions. False Claims Act exposure exists regardless of whether upcoding was intentional if AI tool outputs were accepted without adequate review.',
+    source:'HHS OIG', date:'Apr 15, 2026', impact:'high', impactLabel:'High Risk',
+    action:'Review Module 4', actionNav:'courses',
+    reg:'OIG Work Plan 2026 · False Claims Act 31 U.S.C. §§3729–3733'
+  },
+  {
+    id:5, unread:false,
+    tag:'Industry', tagColor:'var(--gl)', tagText:'var(--green)',
+    icon:'📊', iconBg:'var(--gl)',
+    headline:'AHA survey: 67% of hospitals have deployed AI tools without formal compliance training',
+    body:'The American Hospital Association\'s 2026 AI Adoption Survey found that two-thirds of hospitals have deployed at least one AI tool in clinical or administrative workflows, but only 21% have provided staff with formal training on compliance obligations related to those tools.',
+    detail:'The survey found the most common AI tools in use are ambient documentation assistants (58%), AI-assisted coding software (44%), and clinical decision support systems (39%). Despite widespread adoption, most hospitals report relying on vendor onboarding rather than independent compliance training — creating significant regulatory exposure as CMS, OCR, and OIG increase scrutiny of AI use in healthcare.',
+    source:'American Hospital Association', date:'Mar 28, 2026', impact:'info', impactLabel:'Context',
+    action:null, actionNav:null,
+    reg:'Industry Research · AHA 2026 AI Adoption Survey'
+  },
+  {
+    id:6, unread:false,
+    tag:'HIPAA', tagColor:'var(--tl)', tagText:'var(--teal2)',
+    icon:'🔐', iconBg:'var(--tl)',
+    headline:'OCR settles first HIPAA enforcement action involving AI vendor data breach',
+    body:'The HHS Office for Civil Rights announced a $2.1M settlement with a regional health system following a breach caused by an AI vendor that stored PHI without an adequate Business Associate Agreement and without appropriate encryption safeguards.',
+    detail:'The settlement marks the first OCR enforcement action in which a covered entity was held liable for a breach caused by an AI vendor\'s inadequate security practices. OCR noted that the covered entity had failed to conduct adequate due diligence on the vendor\'s security practices before deploying the tool. The resolution agreement requires the health system to implement a comprehensive AI vendor risk assessment program.',
+    source:'HHS OCR', date:'Mar 12, 2026', impact:'high', impactLabel:'Enforcement',
+    action:'Ask the Expert', actionNav:'expert',
+    reg:'HIPAA Security Rule · 45 CFR §164.308(a)(1) · 45 CFR §164.314'
+  },
+];
+
+function buildNewsFeed(){
+  const org = ORGS[currentOrg];
+  const newsData = (org.news) ? org.news : NEWS;
+  buildNewsStrip(newsData);
+  buildNewsFullView(newsData);
+}
+
+function buildNewsStrip(newsData){
+  const el = document.getElementById('news-strip');
+  if(!el) return;
+  el.innerHTML='';
+  newsData.slice(0,3).forEach(n=>{
+    const div = document.createElement('div');
+    div.className = 'news-card' + (n.unread?' unread':'');
+    div.onclick = ()=>nav('news',null);
+    div.innerHTML=`
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:6px">
+        <span class="news-tag" style="background:${n.tagColor};color:${n.tagText}">${n.tag}</span>
+        <span class="news-impact ${n.impact==='high'?'impact-high':n.impact==='med'?'impact-med':'impact-info'}">${n.impactLabel}</span>
+      </div>
+      <div class="news-headline">${n.headline}</div>
+      <div class="news-footer">
+        <span class="news-source">${n.source}</span>
+        <span class="news-date">${n.date}</span>
+      </div>`;
+    el.appendChild(div);
+  });
+}
+
+function buildNewsFullView(newsData){
+  const el = document.getElementById('news-full');
+  if(!el) return;
+  el.innerHTML='';
+  newsData.forEach(n=>{
+    const div = document.createElement('div');
+    div.className='news-full-card'+(n.unread?' unread':'');
+    const actionBtn = n.action ? `<button class="action-chip" onclick="nav('${n.actionNav}',null)"><i class="ti ti-arrow-right" style="font-size:11px"></i>${n.action}</button>` : '';
+    div.innerHTML=`
+      <div class="news-full-hdr" onclick="toggleNews(this)">
+        <div class="news-full-icon" style="background:${n.iconBg}">${n.icon}</div>
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;flex-wrap:wrap">
+            <span class="news-tag" style="background:${n.tagColor};color:${n.tagText}">${n.tag}</span>
+            <span class="news-impact ${n.impact==='high'?'impact-high':n.impact==='med'?'impact-med':'impact-info'}">${n.impactLabel}</span>
+            ${n.unread?'<span style="font-size:10px;font-weight:700;color:var(--coral)">● NEW</span>':''}
+          </div>
+          <div class="news-headline">${n.headline}</div>
+          <div style="font-size:12px;color:var(--ink3);margin-top:3px">${n.body.substring(0,120)}…</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:.4rem">
+            <span class="news-source">${n.source} · ${n.date}</span>
+            <span style="font-size:10px;color:var(--ink4);font-style:italic">${n.reg}</span>
+          </div>
+        </div>
+        <i class="ti ti-chevron-down" style="color:var(--ink4);font-size:16px;flex-shrink:0;margin-top:4px;transition:transform .2s"></i>
+      </div>
+      <div class="news-expand">
+        <p style="margin-bottom:.5rem">${n.detail}</p>
+        <div style="font-size:11px;color:var(--ink4);font-style:italic;padding:.5rem 0;border-top:1px solid var(--border)">Regulatory basis: ${n.reg}</div>
+        ${actionBtn}
+      </div>`;
+    el.appendChild(div);
+  });
+}
+
+function toggleNews(hdr){
+  const expand = hdr.nextElementSibling;
+  const chevron = hdr.querySelector('.ti-chevron-down');
+  const isOpen = expand.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.news-expand').forEach(e=>e.classList.remove('open'));
+  document.querySelectorAll('.ti-chevron-down').forEach(c=>c.style.transform='');
+  if(!isOpen){
+    expand.classList.add('open');
+    chevron.style.transform='rotate(180deg)';
+  }
+}
+
+// ═══════ ASK THE EXPERT ═══════
+const EXPERT_SYSTEM = `You are a Healthcare AI Compliance Expert for Kaplan AI Ready, a professional AI compliance training platform built on Kaplan's medical and regulatory curriculum.
+
+Your role is to answer questions from healthcare professionals (nurses, physicians, medical coders, billing specialists, PAs, and health IT administrators) about using AI tools in their clinical and administrative workflows.
+
+You MUST:
+- Ground every answer in specific regulations: HIPAA Privacy Rule (45 CFR §164), HIPAA Security Rule (45 CFR §164.300), CMS Documentation Requirements (42 CFR §482.24), OIG Compliance Guidelines, FDA Software as a Medical Device (SaMD) Framework, or the False Claims Act where relevant
+- Be specific and practical — tell them what they can and cannot do, not just that "it depends"
+- Cite the specific regulation, CFR section, or guidance document that supports your answer
+- Keep answers concise: 3-5 short paragraphs maximum
+- End with a brief "Regulatory basis:" line citing the specific rule
+- Use plain language — no legal jargon without explanation
+- If something is genuinely a gray area, say so clearly and explain what factors determine the outcome
+- Never give generic AI safety advice — this is specifically about healthcare regulatory compliance
+
+You must NOT give legal advice or recommend specific vendors. Frame everything as educational compliance guidance consistent with Kaplan's curriculum.
+
+Format your response with clear short paragraphs. Use **bold** for key terms and regulatory names. End with a line starting with "Regulatory basis:" listing the specific citations.`;
+
+let expertHistory = [];
+let expertTyping = false;
+
+function handleExpertKey(e){
+  if(e.key==='Enter' && !e.shiftKey){
+    e.preventDefault();
+    sendExpertMessage();
+  }
+}
+
+function autoResize(el){
+  el.style.height='auto';
+  el.style.height=Math.min(el.scrollHeight,120)+'px';
+}
+
+function useExpertSuggestion(btn){
+  const input = document.getElementById('expert-input');
+  input.value = btn.textContent;
+  autoResize(input);
+  input.focus();
+  // Fade out the suggestion
+  btn.style.opacity='0.4';
+  btn.disabled=true;
+}
+
+function appendUserMsg(text){
+  const msgs = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className='chat-msg-user';
+  div.style.animation='fbIn .2s var(--ease)';
+  div.innerHTML=`<div class="bubble">${escapeHtml(text)}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+
+function appendExpertMsg(text){
+  const msgs = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className='chat-msg-expert';
+  div.style.animation='fbIn .2s var(--ease)';
+  // Format: convert **bold** and newlines, extract Regulatory basis
+  let formatted = escapeHtml(text)
+    .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\n\n/g,'</p><p style="margin-top:.65rem">')
+    .replace(/\n/g,'<br>');
+  // Style the regulatory basis line
+  formatted = formatted.replace(
+    /(Regulatory basis:)(.*?)(<|$)/,
+    '<span style="display:block;margin-top:.75rem;padding-top:.75rem;border-top:1px solid rgba(0,0,0,.08);font-size:11px;color:var(--ink4);font-style:italic"><strong style="color:var(--ink3)">Regulatory basis:</strong>$2</span>$3'
+  );
+  div.innerHTML=`
+    <div class="eavatar">⚕</div>
+    <div>
+      <div class="bubble"><p>${formatted}</p></div>
+      <div class="msg-meta">Kaplan AI Ready Expert · Healthcare track · ${new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</div>
+    </div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+
+function showTyping(show){
+  const ind = document.getElementById('typing-indicator');
+  ind.style.display = show ? 'flex' : 'none';
+  if(show) document.getElementById('chat-messages').scrollTop = document.getElementById('chat-messages').scrollHeight;
+}
+
+function escapeHtml(str){
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+async function sendExpertMessage(){
+  const input = document.getElementById('expert-input');
+  const text = input.value.trim();
+  if(!text || expertTyping) return;
+
+  expertTyping = true;
+  input.value='';
+  input.style.height='auto';
+  document.getElementById('expert-send-btn').style.opacity='0.5';
+
+  appendUserMsg(text);
+  expertHistory.push({role:'user', content:text});
+
+  showTyping(true);
+
+  try {
+    const res = await fetch('/api/claude', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        system: EXPERT_SYSTEM,
+        messages: expertHistory
+      })
+    });
+
+    if(!res.ok){
+      const e = await res.json().catch(()=>({}));
+      throw new Error(e.error?.message || `API ${res.status}`);
+    }
+
+    const data = await res.json();
+    const reply = data.content.map(b=>b.text||'').join('').trim();
+    expertHistory.push({role:'assistant', content:reply});
+
+    showTyping(false);
+    appendExpertMsg(reply);
+
+  } catch(err){
+    showTyping(false);
+    appendExpertMsg(`I'm sorry, I wasn't able to retrieve an answer right now. Please try again. (${err.message})`);
+  } finally {
+    expertTyping = false;
+    document.getElementById('expert-send-btn').style.opacity='1';
+    input.focus();
+  }
+}
+</script>
+<!-- GAP REPORT MODAL -->
+<div class="mo" id="gap-report-modal" style="align-items:flex-start;padding:2rem;overflow-y:auto">
+  <div class="mod" style="max-width:720px;width:100%;padding:0;overflow:visible">
+    <!-- Modal toolbar -->
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;border-bottom:1px solid var(--border);background:var(--surface);border-radius:var(--r3) var(--r3) 0 0;position:sticky;top:0;z-index:10">
+      <div style="font-size:13px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:8px"><i class="ti ti-file-report" style="color:var(--navy)"></i>AI Compliance Gap Report — Preview</div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-g btn-sm" onclick="document.getElementById('gap-report-modal').classList.remove('op')">Close</button>
+        <button class="btn btn-p btn-sm" onclick="printGapReport()"><i class="ti ti-download"></i> Download PDF</button>
+      </div>
+    </div>
+    <!-- Report content -->
+    <div id="gap-report-content" style="background:#fff;border-radius:0 0 var(--r3) var(--r3);overflow:hidden"></div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1678,7 +1678,7 @@ Return ONLY a valid JSON object, no markdown, no explanation:
 The correct answer MUST be at index ${correctIdx}. Arrange the choices so the correct answer is at position ${correctIdx} and the others are plausible wrong answers.`;
 
   try {
-    const res = await fetch('https://kaplan-ai-ready-backend.onrender.com/api/claude', {
+    const res = await fetch('https://kaplan-ai-ready-api.onrender.com/api/claude', {
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
@@ -2391,7 +2391,7 @@ async function sendExpertMessage(){
   showTyping(true);
 
   try {
-    const res = await fetch('https://kaplan-ai-ready-backend.onrender.com/api/claude', {
+    const res = await fetch('https://kaplan-ai-ready-api.onrender.com/api/claude', {
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({

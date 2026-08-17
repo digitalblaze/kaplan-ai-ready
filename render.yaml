@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: kaplan-ai-ready-backend
+    name: kaplan-ai-ready-api
     runtime: python
     rootDir: backend
     buildCommand: pip install --no-cache-dir -r requirements.txt

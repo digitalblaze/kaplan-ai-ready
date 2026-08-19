@@ -61,9 +61,16 @@ async def claude_proxy(request: ClaudeRequest):
         for m in request.messages
     ]
 
+    # Simulator requests have no system prompt and expect structured JSON back.
+    # Use Gemini's JSON mode to guarantee a complete, valid JSON response.
+    is_json_request = request.system is None
+
     body: dict = {
         "contents": contents,
-        "generationConfig": {"maxOutputTokens": request.max_tokens},
+        "generationConfig": {
+            "maxOutputTokens": max(request.max_tokens, 4096),
+            **({"responseMimeType": "application/json"} if is_json_request else {}),
+        },
     }
 
     if request.system:
